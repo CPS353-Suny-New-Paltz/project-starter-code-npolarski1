@@ -1,3 +1,4 @@
 # Software Engineering Project Starter Code
 
-This repo will start you off with an initial configuration that you'll modify as part of Checkpoint 1. As part of the modifications, you'll eventually delete the contents of this README and replace it with documentation for your project.
+The system lists all prime numbers less than or equal to the input.  
+For example, an input of '10' will have an output of '1, 2, 3, 5, 7'.
