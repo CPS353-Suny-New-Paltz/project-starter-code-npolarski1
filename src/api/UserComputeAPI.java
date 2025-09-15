@@ -5,11 +5,12 @@ import project.annotations.NetworkAPI;
 @NetworkAPI
 public interface UserComputeAPI {
 
-	ProcessInputResponse processInput(InputSource inputSource, Delimiter delimiter);
+	ProcessResponse processInputSource(InputSource inputSource, Delimiter delimiter);
 	
-	// for default delimiter
-	ProcessInputResponse processInput(InputSource inputSource);
+	ProcessResponse processInputSource(InputSource inputSource);
 
-	void displayResult(ComputationResult result);
+	ProcessResponse processOutputSource(OutputSource outputSource);
+
+	void sendError(String error);
 	
 }

@@ -1,6 +1,6 @@
 package api;
 
-public class ProcessInputResponse {
+public class ProcessResponse {
 	
 	enum ResponseStatus {
 		SUCCESS,
@@ -8,6 +8,8 @@ public class ProcessInputResponse {
 	}
 	
 	ResponseStatus status;
+	
+	String error;
 
 	boolean success() {
 		if (status == ResponseStatus.SUCCESS) {
@@ -16,9 +18,7 @@ public class ProcessInputResponse {
 		return false;
 	}
 
-	public ComputationResult getCompResults() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getError() {
+		return error;
 	}
-	
 }
