@@ -6,6 +6,9 @@ import project.annotations.NetworkAPI;
 public interface UserComputeAPI {
 
 	ProcessInputResponse processInput(InputSource inputSource, Delimiter delimiter);
+	
+	// for default delimiter
+	ProcessInputResponse processInput(InputSource inputSource);
 
 	void displayResult(ComputationResult result);
 	
