@@ -1,5 +1,5 @@
 package api;
 
-public interface InputInts {
+public class InputInts {
 
 }
