@@ -8,6 +8,10 @@ public class Delimiter {
 		this.delim = delim;
 	}
 	
+	public Delimiter() {
+		this.delim = ";";
+	}
+	
 	public String getDelim() {
 		return delim;
 	}
