@@ -1,6 +1,7 @@
-package api;
+package userComputeApi;
 
 import project.annotations.NetworkAPI;
+import shared.*;
 
 @NetworkAPI
 public interface UserComputeAPI {

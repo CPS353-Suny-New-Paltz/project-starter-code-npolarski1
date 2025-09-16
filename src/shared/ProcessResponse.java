@@ -1,4 +1,6 @@
-package api;
+package shared;
+
+
 
 public class ProcessResponse {
 	
@@ -11,7 +13,7 @@ public class ProcessResponse {
 	
 	String error;
 
-	boolean success() {
+	public boolean success() {
 		if (status == ResponseStatus.SUCCESS) {
 			return true;
 		}

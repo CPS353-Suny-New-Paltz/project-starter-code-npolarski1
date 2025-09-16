@@ -1,4 +1,4 @@
-package api;
+package shared;
 
 public class OutputSource {
 

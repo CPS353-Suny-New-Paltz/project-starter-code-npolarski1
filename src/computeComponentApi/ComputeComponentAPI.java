@@ -1,6 +1,8 @@
-package api;
+package computeComponentApi;
 
 import project.annotations.ConceptualAPI;
+import shared.ComputationResult;
+import shared.InputInts;
 
 @ConceptualAPI
 public interface ComputeComponentAPI {

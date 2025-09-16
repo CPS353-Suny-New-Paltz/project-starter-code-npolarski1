@@ -1,6 +1,8 @@
-package api;
+package computeDataStorageApi;
 
 import project.annotations.ProcessAPIPrototype;
+import shared.ComputationResult;
+import shared.InputInts;
 
 public class ComputeDataStorageAPIPrototype {
 
