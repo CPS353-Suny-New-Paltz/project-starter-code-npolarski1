@@ -1,4 +1,4 @@
-package computeComponentApi;
+package conceptualapi;
 
 import project.annotations.ConceptualAPI;
 import shared.ComputationResult;

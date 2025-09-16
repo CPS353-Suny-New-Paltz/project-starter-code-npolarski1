@@ -1,4 +1,4 @@
-package userComputeApi;
+package networkapi;
 
 import project.annotations.NetworkAPI;
 import shared.*;

@@ -1,4 +1,4 @@
-package computeDataStorageApi;
+package processapi;
 
 import project.annotations.ProcessAPI;
 import shared.ComputationResult;
