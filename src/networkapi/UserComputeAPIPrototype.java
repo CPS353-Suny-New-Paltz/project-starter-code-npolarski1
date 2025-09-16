@@ -1,7 +1,10 @@
 package networkapi;
 
 import project.annotations.NetworkAPIPrototype;
-import shared.*;
+import shared.Delimiter;
+import shared.InputSource;
+import shared.OutputSource;
+import shared.ProcessResponse;
 
 public class UserComputeAPIPrototype {
 	
