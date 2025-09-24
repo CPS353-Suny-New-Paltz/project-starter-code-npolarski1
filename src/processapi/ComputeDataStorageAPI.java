@@ -4,6 +4,7 @@ import project.annotations.ProcessAPI;
 import shared.ComputationResult;
 import shared.InputInts;
 import shared.InputSource;
+import shared.Status;
 
 @ProcessAPI
 public interface ComputeDataStorageAPI {
@@ -12,7 +13,7 @@ public interface ComputeDataStorageAPI {
 
 	ComputationResult processInputInts(InputInts inputInts);
 
-	void writeOutput(ComputationResult compResult);
+	Status writeOutput(ComputationResult compResult);
 
 	InputSource getInputSource();
 
