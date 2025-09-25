@@ -5,6 +5,7 @@ import shared.Delimiter;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
+import shared.Status;
 
 @NetworkAPI
 public interface UserComputeAPI {
@@ -15,6 +16,6 @@ public interface UserComputeAPI {
 
 	ProcessResponse processOutputSource(OutputSource outputSource);
 
-	void sendError(String error);
+	Status sendError(String error);
 	
 }
