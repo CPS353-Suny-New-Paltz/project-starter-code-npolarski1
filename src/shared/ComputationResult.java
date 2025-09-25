@@ -4,5 +4,9 @@ import java.util.List;
 
 public class ComputationResult {
 
-	List<Integer> primeList;
+	private List<Integer> primeList;
+	
+	public List<Integer> getPrimeList() {
+		return primeList;
+	}
 }
