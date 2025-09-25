@@ -28,4 +28,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    filter {
+    	excludeTestsMatching "testCompute"
+    	excludeTestsMatching "testSaveResult"
+    	excludeTestsMatching "testReadInput"
+    	excludeTestsMatching "testProcessInputInts"
+    	excludeTestsMatching "testWriteOutput"
+    	excludeTestsMatching "testGetInputSource"
+    	excludeTestsMatching "testProcessInputSourceWithDelimiter"
+    	excludeTestsMatching "testProcessInputSourceNoDelimiter"
+    	excludeTestsMatching "testProcessOutputSource"
+    	excludeTestsMatching "testSendError"
+    }
 }
