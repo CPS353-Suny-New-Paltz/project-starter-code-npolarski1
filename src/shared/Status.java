@@ -1,10 +1,14 @@
 package shared;
 
 public class Status {
-	enum StatusCode {
+	public enum StatusCode {
 		SUCCESS,
 		FAIL
 	}
 	
-	StatusCode statusCode;
+	private StatusCode statusCode;
+	
+	public StatusCode getStatus() {
+		return statusCode;
+	}
 }
