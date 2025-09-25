@@ -28,6 +28,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    exclude 'test/integrationtest'
-    exclude 'test/smoketest'
+    exclude '**/ComputeEngineIntegrationTest.class'
+    exclude '**/TestComputeComponentAPI.class'
+    exclude '**/TestComputeDataStorageAPI.class'
+    exclude '**/TestUserComputeAPI.class'
 }
