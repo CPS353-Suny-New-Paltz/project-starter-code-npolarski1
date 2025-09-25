@@ -1,3 +1,5 @@
+import org.junit.jupiter.api.Test;
+
 import implementapi.UserComputeAPI;
 import shared.Delimiter;
 import shared.InputSource;
@@ -8,6 +10,7 @@ import shared.Status;
 public class TestUserComputeAPI {
 	
 	// smoke tests
+	@Test
 	public void testProcessInputSourceWithDelimiter() {
 		UserComputeAPI testAPI = new UserComputeAPI();
 		InputSource testInputSource = new InputSource(System.in);
@@ -16,6 +19,7 @@ public class TestUserComputeAPI {
 		assert testResponse.success();
 	}
 	
+	@Test
 	public void testProcessInputSourceNoDelimiter() {
 		UserComputeAPI testAPI = new UserComputeAPI();
 		InputSource testInputSource = new InputSource(System.in);
@@ -23,6 +27,7 @@ public class TestUserComputeAPI {
 		assert testResponse.success();
 	}
 	
+	@Test
 	public void testProcessOutputSource() {
 		UserComputeAPI testAPI = new UserComputeAPI();
 		OutputSource testOutputSource = new OutputSource();
@@ -30,6 +35,7 @@ public class TestUserComputeAPI {
 		assert testResponse.success();
 	}
 	
+	@Test
 	public void testSendError() {
 		UserComputeAPI testAPI = new UserComputeAPI();
 		Status testStatus = testAPI.sendError("test error");

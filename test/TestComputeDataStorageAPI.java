@@ -7,16 +7,20 @@ import shared.Status;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import implementapi.ComputeDataStorageAPI;
 
 public class TestComputeDataStorageAPI {
 	
 	// smoke tests
+	@Test
 	public void testReadInput() {
 		ComputeDataStorageAPI testAPI = new ComputeDataStorageAPI();
 		assert testAPI.readInput() != null;
 	}
 	
+	@Test
 	public void testProcessInputInts() {
 		List<Integer> inputInts = new ArrayList<Integer>();
 		inputInts.add(5);
@@ -30,6 +34,7 @@ public class TestComputeDataStorageAPI {
 		assert result.getPrimeList().equals(correctOutput);
 	}
 	
+	@Test
 	public void testWriteOutput() {
 		ComputationResult testResult = new ComputationResult();
 		ComputeDataStorageAPI testAPI = new ComputeDataStorageAPI();
@@ -37,6 +42,7 @@ public class TestComputeDataStorageAPI {
 		assert status.getStatus() == Status.StatusCode.SUCCESS;
 	}
 	
+	@Test
 	public void testGetInputSource() {
 		ComputeDataStorageAPI testAPI = new ComputeDataStorageAPI();
 		InputSource testSource = testAPI.getInputSource();

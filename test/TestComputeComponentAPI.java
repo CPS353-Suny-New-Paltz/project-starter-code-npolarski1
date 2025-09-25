@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import implementapi.ComputeComponentAPI;
 import shared.ComputationResult;
 import shared.InputInts;
@@ -8,6 +10,7 @@ import shared.InputInts;
 public class TestComputeComponentAPI {
 	 
 	// smoke tests
+	@Test
 	public void testCompute() {
 		List<Integer> inputInts = new ArrayList<Integer>();
 		inputInts.add(5);
@@ -21,6 +24,7 @@ public class TestComputeComponentAPI {
 		assert result.getPrimeList().equals(correctOutput);
 	}
 	
+	@Test
 	public void testSaveResult() {
 		ComputeComponentAPI testApi = new ComputeComponentAPI();
 		ComputationResult testResult = new ComputationResult();
