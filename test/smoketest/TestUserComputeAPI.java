@@ -1,3 +1,4 @@
+package smoketest;
 import org.junit.jupiter.api.Test;
 
 import implementapi.UserComputeAPI;

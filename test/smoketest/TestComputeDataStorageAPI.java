@@ -1,3 +1,4 @@
+package smoketest;
 
 import shared.ComputationResult;
 import shared.InputInts;
