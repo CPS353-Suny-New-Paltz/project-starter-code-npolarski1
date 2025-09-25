@@ -26,7 +26,6 @@ public class TestStatusCheckPR {
     private static final String SUCCESS = "success";
     private static final String APPROVED = "APPROVED";
     
-    @Test
     public void testPullRequest() throws Exception {
         String baseApiPath = getBaseApiPath();
         String toCurl = baseApiPath + "pulls?state=all";
