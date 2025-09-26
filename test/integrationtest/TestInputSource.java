@@ -8,4 +8,8 @@ public class TestInputSource {
 	public void setInput(List<Integer> input) {
 		this.inputInts = input;
 	}
+	
+	public List<Integer> getInput() {
+		return inputInts;
+	}
 }
