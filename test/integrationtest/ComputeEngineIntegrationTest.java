@@ -5,11 +5,22 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import implementapi.ComputeComponentAPI;
+import implementapi.UserComputeAPI;
+import shared.ComputationResult;
+import shared.InputInts;
+import shared.InputSource;
+
 public class ComputeEngineIntegrationTest {
 	
 	@Test
 	public void computeEngineTest() {
 		TestDataStoreAPI testApi = new TestDataStoreAPI();
+		ComputeComponentAPI testComponentApi = new ComputeComponentAPI();
+		UserComputeAPI userComputeApi = new UserComputeAPI();
+		
+		
+		
 		
 		TestInputSource inputSource = new TestInputSource();
 		List<Integer> input = new ArrayList<Integer>();
@@ -18,9 +29,15 @@ public class ComputeEngineIntegrationTest {
 		input.add(25);
 		inputSource.setInput(input);
 		
-		testApi.setInputSource(inputSource);
+		userComputeApi.processInputSource(new InputSource(inputSource));
+		
+		testApi.readInput();
+		
+		ComputationResult result = testComponentApi.compute(new InputInts(inputSource.getInput()));
 		
 		TestOutputSource outputSource = new TestOutputSource();
+		
+		testApi.writeOutput(result);
 		
 		List<String> correctOutput = new ArrayList<String>();
 		correctOutput.add("1");
