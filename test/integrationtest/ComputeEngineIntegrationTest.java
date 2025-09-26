@@ -17,10 +17,7 @@ public class ComputeEngineIntegrationTest {
 	public void computeEngineTest() {
 		TestDataStoreAPI testApi = new TestDataStoreAPI();
 		ComputeComponentAPI testComponentApi = new ComputeComponentAPI();
-		UserComputeAPI userComputeApi = new UserComputeAPI();
-		
-		
-		
+		UserComputeAPI testUserComputeApi = new UserComputeAPI();
 		
 		TestInputSource inputSource = new TestInputSource();
 		List<Integer> input = new ArrayList<Integer>();
@@ -29,7 +26,7 @@ public class ComputeEngineIntegrationTest {
 		input.add(25);
 		inputSource.setInput(input);
 		
-		userComputeApi.processInputSource(new InputSource(inputSource));
+		testUserComputeApi.processInputSource(new InputSource(inputSource));
 		
 		testApi.readInput();
 		
