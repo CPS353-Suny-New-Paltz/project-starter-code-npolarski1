@@ -11,6 +11,6 @@ public interface ComputeComponentAPI {
 
 	List<ComputationResult> compute(InputInts inputInts);
 
-	void saveResult(ComputationResult result);
+	void saveResults(List<ComputationResult> results);
 
 }
