@@ -4,17 +4,17 @@ import project.annotations.ProcessAPI;
 import shared.ComputationResult;
 import shared.InputInts;
 import shared.InputSource;
-import shared.Status;
+import shared.OutputSource;
+import shared.ProcessResponse;
 
 @ProcessAPI
 public interface ComputeDataStorageAPI {
 
 	InputInts readInput();
 
-	ComputationResult processInputInts(InputInts inputInts);
+	ProcessResponse writeOutput(ComputationResult compResult);
 
-	Status writeOutput(ComputationResult compResult);
-
-	InputSource getInputSource();
-
+	public ProcessResponse setInputSource(InputSource inputSource);
+	
+	public ProcessResponse setOutputSource(OutputSource outputSource);
 }
