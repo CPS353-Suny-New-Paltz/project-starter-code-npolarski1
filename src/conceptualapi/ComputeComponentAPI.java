@@ -1,5 +1,7 @@
 package conceptualapi;
 
+import java.util.List;
+
 import project.annotations.ConceptualAPI;
 import shared.ComputationResult;
 import shared.InputInts;
@@ -7,7 +9,7 @@ import shared.InputInts;
 @ConceptualAPI
 public interface ComputeComponentAPI {
 
-	ComputationResult compute(InputInts inputInts);
+	List<ComputationResult> compute(InputInts inputInts);
 
 	void saveResult(ComputationResult result);
 
