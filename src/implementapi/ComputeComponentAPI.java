@@ -51,8 +51,9 @@ public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
 		
 		return outputs;
 	}
-	
-	public void saveResult(ComputationResult result) {
+
+	@Override
+	public void saveResults(List<ComputationResult> results) {
 		// TODO Auto-generated method stub
 		
 	}
