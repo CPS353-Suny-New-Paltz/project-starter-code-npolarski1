@@ -8,6 +8,8 @@ import shared.InputInts;
 
 public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
 	
+	private InputInts input;
+	
 	private List<Integer> calculatePrimes(Integer n) {
 		// there are no prime numbers less than 2, so return empty list if n < 2
 		if (n < 2) return Collections.emptyList();
@@ -39,8 +41,8 @@ public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
         return primes;
 	}
 
-	public List<ComputationResult> compute(InputInts inputInts) {
-		List<Integer> inputs = inputInts.getInts();
+	public List<ComputationResult> compute() {
+		List<Integer> inputs = input.getInts();
 		List<ComputationResult> outputs = new ArrayList<ComputationResult>();
 		
 		for (Integer n : inputs) {
@@ -56,5 +58,9 @@ public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
 	public void saveResults(List<ComputationResult> results) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setInput(InputInts input) {
+		this.input = input;
 	}
 }
