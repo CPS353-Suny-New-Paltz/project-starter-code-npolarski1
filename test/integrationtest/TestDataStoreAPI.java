@@ -3,7 +3,8 @@ package integrationtest;
 import shared.ComputationResult;
 import shared.InputInts;
 import shared.InputSource;
-import shared.Status;
+import shared.OutputSource;
+import shared.ProcessResponse;
 
 public class TestDataStoreAPI implements processapi.ComputeDataStorageAPI {
 	
@@ -26,19 +27,19 @@ public class TestDataStoreAPI implements processapi.ComputeDataStorageAPI {
 	}
 
 	@Override
-	public ComputationResult processInputInts(InputInts inputInts) {
+	public ProcessResponse writeOutput(ComputationResult compResult) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Status writeOutput(ComputationResult compResult) {
+	public ProcessResponse setInputSource(InputSource inputSource) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public InputSource getInputSource() {
+	public ProcessResponse setOutputSource(OutputSource outputSource) {
 		// TODO Auto-generated method stub
 		return null;
 	}
