@@ -53,12 +53,6 @@ public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
 		
 		return outputs;
 	}
-
-	@Override
-	public void saveResults(List<ComputationResult> results) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public void setInput(InputInts input) {
 		this.input = input;

@@ -8,9 +8,9 @@ import shared.InputInts;
 
 @ConceptualAPI
 public interface ComputeComponentAPI {
+	
+	List<ComputationResult> compute();
 
-	List<ComputationResult> compute(InputInts inputInts);
-
-	void saveResults(List<ComputationResult> results);
+	void setInput(InputInts input);
 
 }
