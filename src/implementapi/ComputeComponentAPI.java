@@ -12,7 +12,9 @@ public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
 	
 	private List<Integer> calculatePrimes(Integer n) {
 		// there are no prime numbers less than 2, so return empty list if n < 2
-		if (n < 2) return Collections.emptyList();
+		if (n < 2) {
+			return Collections.emptyList();
+		}
 		
 		// composite contains a true/false for each integer up to n
 		// true if number is composite
@@ -36,7 +38,9 @@ public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
         List<Integer> primes = new ArrayList<>();
         for (int i = 2; i <= n; i++) {
         	// if composite[i] is false, then the number is prime and is added to the prime list
-            if (!composite[i]) primes.add(i);
+            if (!composite[i]) {
+				primes.add(i);
+			}
         }
         return primes;
 	}

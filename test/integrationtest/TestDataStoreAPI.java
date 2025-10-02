@@ -69,13 +69,17 @@ public class TestDataStoreAPI implements ComputeDataStorageAPI {
 	}
 
 	public ProcessResponse setInputSource(TestInputSource inputSource) {
-		if (inputSource == null) return ProcessResponse.FAIL;
+		if (inputSource == null) {
+			return ProcessResponse.FAIL;
+		}
 		this.inputSource = inputSource;
 		return ProcessResponse.SUCCESS;
 	}
 
 	public ProcessResponse setOutputSource(TestOutputSource outputSource) {
-		if (outputSource == null) return ProcessResponse.FAIL;
+		if (outputSource == null) {
+			return ProcessResponse.FAIL;
+		}
 		this.outputSource = outputSource;
 		return ProcessResponse.SUCCESS;
 	}
