@@ -1,5 +1,7 @@
 package smoketest;
 
+import java.util.ArrayList;
+
 import shared.ComputationResult;
 import shared.ProcessResponse;
 
@@ -19,6 +21,7 @@ public class TestComputeDataStorageAPI {
 	@Test
 	public void testWriteOutput() {
 		ComputationResult testResult = new ComputationResult();
+		testResult.setPrimeList(new ArrayList<Integer>());
 		ComputeDataStorageAPI testAPI = new ComputeDataStorageAPI();
 		ProcessResponse status = testAPI.writeOutput(testResult);
 		assert status.isSuccess();

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import implementapi.ComputeComponentAPI;
 import implementapi.UserComputeAPI;
 import shared.ComputationResult;
+import shared.InputInts;
 import shared.InputSource;
 
 public class ComputeEngineIntegrationTest {
@@ -25,22 +26,26 @@ public class ComputeEngineIntegrationTest {
 		input.add(25);
 		inputSource.setInput(input);
 		
+		// wire input into the user API and our in-memory data store
 		testUserComputeApi.processInputSource(new InputSource(inputSource));
+		testApi.setInputSource(inputSource);
 		
 		testApi.readInput();
 		
+		testComponentApi.setInput(new InputInts(input));
 		List<ComputationResult> result = testComponentApi.compute();
 		
 		TestOutputSource outputSource = new TestOutputSource();
+		testApi.setOutputSource(outputSource);
 		
 		for (ComputationResult r : result) {
 			testApi.writeOutput(r);
 		}
 		
 		List<String> correctOutput = new ArrayList<String>();
-		correctOutput.add("1");
-		correctOutput.add("1, 2, 3, 5, 7");
-		correctOutput.add("1, 2, 3, 5, 7, 11, 13, 17, 19, 23");
+		correctOutput.add("");
+		correctOutput.add("2, 3, 5, 7");
+		correctOutput.add("2, 3, 5, 7, 11, 13, 17, 19, 23");
 		assert outputSource.getOutput().equals(correctOutput);
 	}
 }
