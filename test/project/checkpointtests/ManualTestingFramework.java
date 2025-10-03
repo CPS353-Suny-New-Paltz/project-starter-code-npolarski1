@@ -44,9 +44,11 @@ public class ManualTestingFramework {
             List<ComputationResult> results = computeApi.compute();
 
             // Produce one comma-separated line; one output per input
-            // Use the count of primes per input as the scalar output
+            // Use the actual prime numbers as the output
             String csv = results.stream()
-                    .map(r -> Integer.toString(r.getPrimeList().size()))
+                    .map(r -> r.getPrimeList().stream()
+                            .map(i -> i.toString())
+                            .collect(Collectors.joining(";")))
                     .collect(Collectors.joining(","));
 
             Path outputPath = Paths.get(OUTPUT);
