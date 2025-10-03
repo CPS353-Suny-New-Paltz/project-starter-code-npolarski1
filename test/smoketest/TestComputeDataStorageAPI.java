@@ -7,14 +7,14 @@ import shared.ProcessResponse;
 
 import org.junit.jupiter.api.Test;
 
-import implementapi.ComputeDataStorageAPI;
+import implementapi.DataStorageProcessAPI;
 
 public class TestComputeDataStorageAPI {
 	
 	// smoke tests
 	@Test
 	public void testReadInput() {
-		ComputeDataStorageAPI testAPI = new ComputeDataStorageAPI();
+		DataStorageProcessAPI testAPI = new DataStorageProcessAPI();
 		assert testAPI.readInput() != null;
 	}
 	
@@ -22,7 +22,7 @@ public class TestComputeDataStorageAPI {
 	public void testWriteOutput() {
 		ComputationResult testResult = new ComputationResult();
 		testResult.setPrimeList(new ArrayList<Integer>());
-		ComputeDataStorageAPI testAPI = new ComputeDataStorageAPI();
+		DataStorageProcessAPI testAPI = new DataStorageProcessAPI();
 		ProcessResponse status = testAPI.writeOutput(testResult);
 		assert status.isSuccess();
 	}

@@ -9,16 +9,16 @@ import shared.OutputSource;
 import shared.ProcessResponse;
 import shared.Status;
 
-public class UserComputeAPI implements networkapi.UserRequestNetworkAPI {
+public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	
-	private ComputeDataStorageAPI storage;
+	private DataStorageProcessAPI storage;
 	private ComputeComponentAPI engine;
 	
 	private InputInts input;
 	private List<ComputationResult> results;
 	
-	public UserComputeAPI() {
-		storage = new ComputeDataStorageAPI();
+	public UserRequestNetworkAPI() {
+		storage = new DataStorageProcessAPI();
 	}
 
 	@Override

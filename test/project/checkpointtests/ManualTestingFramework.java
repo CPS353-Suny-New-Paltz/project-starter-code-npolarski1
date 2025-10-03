@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import implementapi.ComputeComponentAPI;
-import implementapi.ComputeDataStorageAPI;
-import implementapi.UserComputeAPI;
+import implementapi.DataStorageProcessAPI;
+import implementapi.UserRequestNetworkAPI;
 import shared.ComputationResult;
 import shared.InputInts;
 
@@ -22,8 +22,8 @@ public class ManualTestingFramework {
         // TODO 1:
         // Instantiate a real (ie, class definition lives in the src/ folder) implementation 
         // of all 3 APIs
-        UserComputeAPI userApi = new UserComputeAPI();
-        ComputeDataStorageAPI storageApi = new ComputeDataStorageAPI();
+        UserRequestNetworkAPI userApi = new UserRequestNetworkAPI();
+        DataStorageProcessAPI storageApi = new DataStorageProcessAPI();
         ComputeComponentAPI computeApi = new ComputeComponentAPI();
 
         // TODO 2:
