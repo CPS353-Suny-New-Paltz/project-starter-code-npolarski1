@@ -8,7 +8,7 @@ import shared.ProcessResponse;
 public class UserComputeAPIPrototype {
 	
 	@NetworkAPIPrototype
-	public void prototype(UserComputeAPI networkApi) {
+	public void prototype(UserRequestNetworkAPI networkApi) {
 		// process input source
 		ProcessResponse inputResponse = networkApi.processInputSource(new InputSource(null));
 		// process output source

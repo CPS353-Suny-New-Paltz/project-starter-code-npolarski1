@@ -1,13 +1,12 @@
 package networkapi;
 
 import project.annotations.NetworkAPI;
-import shared.Delimiter;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
 
 @NetworkAPI
-public interface UserComputeAPI {
+public interface UserRequestNetworkAPI {
 
 	ProcessResponse processInputSource(InputSource inputSource);
 	

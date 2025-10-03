@@ -3,14 +3,14 @@ package integrationtest;
 import java.util.ArrayList;
 import java.util.List;
 
-import processapi.ComputeDataStorageAPI;
+import processapi.DataStorageProcessAPI;
 import shared.ComputationResult;
 import shared.InputInts;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
 
-public class TestDataStoreAPI implements ComputeDataStorageAPI {
+public class TestDataStoreAPI implements DataStorageProcessAPI {
 	
 	private TestInputSource inputSource;
 

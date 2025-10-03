@@ -8,7 +8,7 @@ import shared.OutputSource;
 import shared.ProcessResponse;
 
 @ProcessAPI
-public interface ComputeDataStorageAPI {
+public interface DataStorageProcessAPI {
 
 	InputInts readInput();
 

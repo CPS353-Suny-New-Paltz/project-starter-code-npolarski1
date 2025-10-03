@@ -9,7 +9,7 @@ import shared.OutputSource;
 import shared.ProcessResponse;
 import shared.Status;
 
-public class UserComputeAPI implements networkapi.UserComputeAPI {
+public class UserComputeAPI implements networkapi.UserRequestNetworkAPI {
 	
 	private ComputeDataStorageAPI storage;
 	private ComputeComponentAPI engine;
