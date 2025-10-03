@@ -2,25 +2,18 @@ package shared;
 
 
 
-public class ProcessResponse {
+public enum ProcessResponse {
 	
-	enum ResponseStatus {
-		SUCCESS,
-		FAIL
-	}
+	SUCCESS(true),
+	FAIL(false);
 	
-	ResponseStatus status;
+	private boolean isSuccess;
 	
-	String error;
-
-	public boolean success() {
-		if (status == ResponseStatus.SUCCESS) {
-			return true;
-		}
-		return false;
+	ProcessResponse(boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 
-	public String getError() {
-		return error;
+	public boolean isSuccess() {
+		return this.isSuccess;
 	}
 }

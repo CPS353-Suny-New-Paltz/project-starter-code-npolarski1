@@ -8,4 +8,8 @@ public class TestOutputSource {
 	public List<String> getOutput() {
 		return output;
 	}
+
+	public void setOutput(List<String> output) {
+		this.output = output;
+	}
 }
