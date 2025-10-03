@@ -46,7 +46,7 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 		
 		try (FileWriter writer = new FileWriter(filePath)) {
 			for (Integer i : compResult.getPrimeList()) {
-				writer.write(i);
+				writer.write(i.toString());
 			}
 			writer.write("\n");
 		} catch (IOException e) {
