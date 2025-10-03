@@ -2,12 +2,10 @@ package implementapi;
 import java.util.List;
 
 import shared.ComputationResult;
-import shared.Delimiter;
 import shared.InputInts;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
-import shared.Status;
 
 public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	
@@ -19,6 +17,7 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	
 	public UserRequestNetworkAPI() {
 		storage = new DataStorageProcessAPI();
+		engine = new ComputeComponentAPI();
 	}
 
 	@Override
