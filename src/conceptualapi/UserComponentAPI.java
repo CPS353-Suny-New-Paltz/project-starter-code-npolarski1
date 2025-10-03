@@ -1,11 +1,9 @@
 package conceptualapi;
 
-import project.annotations.ConceptualAPI;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
 
-@ConceptualAPI
 public interface UserComponentAPI {
 
 	ProcessResponse processInputSource(InputSource inputSource);
