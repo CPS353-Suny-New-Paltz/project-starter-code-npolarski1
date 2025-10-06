@@ -16,20 +16,27 @@ public class TestComputeComponentAPI {
 		List<Integer> inputInts = new ArrayList<Integer>();
 		inputInts.add(5);
 		ComputeComponentAPI testApi = new ComputeComponentAPI();
-		ComputationResult result = testApi.compute(new InputInts(inputInts));
+		InputInts wrappedInput = new InputInts(inputInts);
+		testApi.setInput(wrappedInput);
+		List<ComputationResult> results = testApi.compute();
 		List<Integer> correctOutput = new ArrayList<Integer>();
-		correctOutput.add(1);
 		correctOutput.add(2);
 		correctOutput.add(3);
 		correctOutput.add(5);
-		assert result.getPrimeList().equals(correctOutput);
+		assert results.get(0).getPrimeList().equals(correctOutput);
 	}
-	
+
 	@Test
-	public void testSaveResult() {
+	public void testComputeWithValuesLessThanTwo() {
+		List<Integer> inputInts = new ArrayList<Integer>();
+		inputInts.add(0);
+		inputInts.add(1);
 		ComputeComponentAPI testApi = new ComputeComponentAPI();
-		ComputationResult testResult = new ComputationResult();
-		// test passes if saveResult doesn't throw error
-		testApi.saveResult(testResult);
+		InputInts wrappedInput = new InputInts(inputInts);
+		testApi.setInput(wrappedInput);
+		List<ComputationResult> results = testApi.compute();
+		assert results.size() == 2;
+		assert results.get(0).getPrimeList().isEmpty();
+		assert results.get(1).getPrimeList().isEmpty();
 	}
 }

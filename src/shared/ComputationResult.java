@@ -9,4 +9,8 @@ public class ComputationResult {
 	public List<Integer> getPrimeList() {
 		return primeList;
 	}
+	
+	public void setPrimeList(List<Integer> primeList) {
+		this.primeList = primeList;
+	}
 }

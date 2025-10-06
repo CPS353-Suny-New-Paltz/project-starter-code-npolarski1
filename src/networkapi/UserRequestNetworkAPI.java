@@ -1,21 +1,22 @@
 package networkapi;
 
 import project.annotations.NetworkAPI;
-import shared.Delimiter;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
-import shared.Status;
 
 @NetworkAPI
-public interface UserComputeAPI {
+public interface UserRequestNetworkAPI {
 
-	ProcessResponse processInputSource(InputSource inputSource, Delimiter delimiter);
-	
 	ProcessResponse processInputSource(InputSource inputSource);
-
+	
 	ProcessResponse processOutputSource(OutputSource outputSource);
 
-	Status sendError(String error);
+	public void requestReadInput();
 	
+	public void passInput();
+	
+	public ProcessResponse requestStartComputation();
+	
+	public void requestWriteResults();
 }
