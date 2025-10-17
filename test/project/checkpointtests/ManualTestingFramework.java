@@ -1,17 +1,9 @@
 package project.checkpointtests;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import implementapi.ComputeComponentAPI;
-import implementapi.DataStorageProcessAPI;
 import implementapi.UserRequestNetworkAPI;
-import shared.ComputationResult;
-import shared.InputInts;
+import shared.InputSource;
+import shared.OutputSource;
+import shared.ProcessResponse;
 
 public class ManualTestingFramework {
     
@@ -22,37 +14,34 @@ public class ManualTestingFramework {
         // TODO 1:
         // Instantiate a real (ie, class definition lives in the src/ folder) implementation 
         // of all 3 APIs
-        UserRequestNetworkAPI userApi = new UserRequestNetworkAPI();
-        DataStorageProcessAPI storageApi = new DataStorageProcessAPI();
-        ComputeComponentAPI computeApi = new ComputeComponentAPI();
+        implementapi.DataStorageProcessAPI storageApi = new implementapi.DataStorageProcessAPI();
+        implementapi.ComputeComponentAPI computeApi = new implementapi.ComputeComponentAPI();
+        UserRequestNetworkAPI userApi = new UserRequestNetworkAPI(storageApi, computeApi);
 
         // TODO 2:
-        // Run a computation with an input file of <root project dir>/manualTestInput.txt
-        // and an output of <root project dir>/manualTestOutput.txt, with a delimiter of ',' 
+        // Delegate IO and computation to the UserRequestNetworkAPI. The network API will
+        // configure the storage to use the manual input/output files, read the input,
+        // pass it to the compute component, run the computation, and write results.
         try {
-            Path inputPath = Paths.get(INPUT);
-            List<String> lines = Files.readAllLines(inputPath);
-
-            List<Integer> inputs = new ArrayList<>();
-            for (String line : lines) {
-                if (line != null && !line.isBlank()) {
-                    inputs.add(Integer.parseInt(line.trim()));
-                }
+            // Tell storage which input/output to use (the implementation expects
+            // an InputSource/OutputSource object; here we pass the file path strings
+            // so the DataStorageProcessAPI can interpret them if needed).
+            if (userApi.processInputSource(new InputSource(INPUT)) != ProcessResponse.SUCCESS) {
+                throw new RuntimeException("Failed to set input source");
             }
 
-            computeApi.setInput(new InputInts(inputs));
-            List<ComputationResult> results = computeApi.compute();
+            if (userApi.processOutputSource(new OutputSource(OUTPUT)) != ProcessResponse.SUCCESS) {
+                throw new RuntimeException("Failed to set output source");
+            }
 
-            // Produce one comma-separated line; one output per input
-            // Use the actual prime numbers as the output
-            String csv = results.stream()
-                    .map(r -> r.getPrimeList().stream()
-                            .map(i -> i.toString())
-                            .collect(Collectors.joining(";")))
-                    .collect(Collectors.joining(","));
-
-            Path outputPath = Paths.get(OUTPUT);
-            Files.writeString(outputPath, csv);
+            // Read input from storage, hand it to compute engine, start computation,
+            // and then write results back to storage.
+            userApi.requestReadInput();
+            userApi.passInput();
+            if (userApi.requestStartComputation() != ProcessResponse.SUCCESS) {
+                throw new RuntimeException("Computation failed to start");
+            }
+            userApi.requestWriteResults();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
