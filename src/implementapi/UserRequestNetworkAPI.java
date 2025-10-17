@@ -16,8 +16,12 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	private List<ComputationResult> results;
 	
 	public UserRequestNetworkAPI() {
-		storage = new DataStorageProcessAPI();
-		engine = new ComputeComponentAPI();
+		this(new DataStorageProcessAPI(), new ComputeComponentAPI());
+	}
+
+	public UserRequestNetworkAPI(DataStorageProcessAPI storage, ComputeComponentAPI engine) {
+		this.storage = storage;
+		this.engine = engine;
 	}
 
 	@Override
