@@ -29,7 +29,7 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 		if (storage.setInputSource(inputSource).isSuccess()) {
 			return ProcessResponse.SUCCESS;
 		}
-		return ProcessResponse.FAIL;
+		throw new RuntimeException("Failed to set input source");
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 		if (storage.setOutputSource(outputSource).isSuccess()) {
 			return ProcessResponse.SUCCESS;
 		}
-		return ProcessResponse.FAIL;
+		throw new RuntimeException("Failed to set output source");
 	}
 	
 	public void requestReadInput() {

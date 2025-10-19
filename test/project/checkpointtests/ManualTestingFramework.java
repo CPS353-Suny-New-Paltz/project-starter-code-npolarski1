@@ -23,16 +23,9 @@ public class ManualTestingFramework {
         // configure the storage to use the manual input/output files, read the input,
         // pass it to the compute component, run the computation, and write results.
         try {
-            // Tell storage which input/output to use (the implementation expects
-            // an InputSource/OutputSource object; here we pass the file path strings
-            // so the DataStorageProcessAPI can interpret them if needed).
-            if (userApi.processInputSource(new InputSource(INPUT)) != ProcessResponse.SUCCESS) {
-                throw new RuntimeException("Failed to set input source");
-            }
-
-            if (userApi.processOutputSource(new OutputSource(OUTPUT)) != ProcessResponse.SUCCESS) {
-                throw new RuntimeException("Failed to set output source");
-            }
+            // Tell storage which input/output to use
+        	userApi.processInputSource(new InputSource(INPUT));
+        	userApi.processOutputSource(new OutputSource(OUTPUT));
 
             // Read input from storage, hand it to compute engine, start computation,
             // and then write results back to storage.
