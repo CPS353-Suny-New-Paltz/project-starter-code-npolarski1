@@ -21,12 +21,12 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 
 	@Override
 	public InputInts readInput() {
-		// temporary implementation for testing purposes
-		String filePath = "src/input.txt";
+		String filePath = inputSource.getFilePath();
 		
 		List<Integer> inputList = new ArrayList<Integer>();
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+			// assumes first line is delimiter, second line is input data
             delim = new Delimiter(reader.readLine());
             String[] inputStrings = reader.readLine().split(delim.getDelim());
             for (String inputString : inputStrings) {
@@ -41,12 +41,13 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 
 	@Override
 	public ProcessResponse writeOutput(ComputationResult compResult) {
-		// temporary input for testing purposes
-		String filePath = "src/output.txt";
+		String filePath = outputSource.getFilePath();
 		
-		try (FileWriter writer = new FileWriter(filePath)) {
+		// pass true as second argument to FileWriter to append to file
+		try (FileWriter writer = new FileWriter(filePath, true)) {
 			for (Integer i : compResult.getPrimeList()) {
 				writer.write(i.toString());
+				writer.write(delim.getDelim());
 			}
 			writer.write("\n");
 		} catch (IOException e) {
