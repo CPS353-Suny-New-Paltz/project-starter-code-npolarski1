@@ -12,4 +12,9 @@ public class InputSource {
 	public Object getInputSource() {
 		return inputSource;
 	}
+
+	public String getFilePath() {
+		// assuming input source is a file path represented as a String
+		return (String) inputSource;
+	}
 }

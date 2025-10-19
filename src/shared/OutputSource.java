@@ -15,4 +15,8 @@ public class OutputSource {
 	public Object getOutputSource() {
 		return outputSource;
 	}
+
+	public String getFilePath() {
+		return (String) outputSource;
+	}
 }
