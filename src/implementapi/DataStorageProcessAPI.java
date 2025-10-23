@@ -38,7 +38,13 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 	}
 
 	@Override
-	public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult) {
+	public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult)
+	{
+		if (compResult == null) {
+			throw new IllegalArgumentException("Computation result cannot be null");
+		}
+		// lastResult doesn't require checking as it is a boolean
+		
 		String filePath = outputSource.getFilePath();
 		
 		// pass true as second argument to FileWriter to append to file
@@ -61,11 +67,17 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 	}
 
 	public ProcessResponse setInputSource(InputSource inputSource) {
+		if (inputSource == null) {
+			throw new IllegalArgumentException("Input source cannot be null");
+		}
 		this.inputSource = inputSource;
 		return ProcessResponse.SUCCESS;
 	}
 
 	public ProcessResponse setOutputSource(OutputSource outputSource) {
+		if (outputSource == null) {
+			throw new IllegalArgumentException("Output source cannot be null");
+		}
 		this.outputSource = outputSource;
 		return ProcessResponse.SUCCESS;
 	}
