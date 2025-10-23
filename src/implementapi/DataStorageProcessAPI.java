@@ -26,12 +26,10 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 		List<Integer> inputList = new ArrayList<Integer>();
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-			// assumes first line is delimiter, second line is input data
-            delim = new Delimiter(reader.readLine());
-            String[] inputStrings = reader.readLine().split(delim.getDelim());
-            for (String inputString : inputStrings) {
-            	inputList.add(Integer.parseInt(inputString));
-            }
+			delim = new Delimiter(reader.readLine());
+			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+				inputList.add(Integer.parseInt(line));
+			}
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
@@ -49,7 +47,7 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 				writer.write(i.toString());
 				writer.write(delim.getDelim());
 			}
-			writer.write("\n");
+			writer.write(",");
 		} catch (IOException e) {
             return ProcessResponse.FAIL;
         }
