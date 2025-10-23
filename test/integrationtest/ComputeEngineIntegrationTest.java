@@ -38,8 +38,12 @@ public class ComputeEngineIntegrationTest {
 		TestOutputSource outputSource = new TestOutputSource();
 		testApi.setOutputSource(outputSource);
 		
+		boolean lastResult = false;
 		for (ComputationResult r : result) {
-			testApi.writeOutput(r);
+			if (r == result.get(result.size() - 1)) {
+				lastResult = true;
+			}
+			testApi.writeOutput(r, lastResult);
 		}
 		
 		List<String> correctOutput = new ArrayList<String>();

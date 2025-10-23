@@ -21,17 +21,15 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 
 	@Override
 	public InputInts readInput() {
-		// temporary implementation for testing purposes
-		String filePath = "src/input.txt";
+		String filePath = inputSource.getFilePath();
 		
 		List<Integer> inputList = new ArrayList<Integer>();
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            delim = new Delimiter(reader.readLine());
-            String[] inputStrings = reader.readLine().split(delim.getDelim());
-            for (String inputString : inputStrings) {
-            	inputList.add(Integer.parseInt(inputString));
-            }
+			delim = new Delimiter(reader.readLine());
+			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+				inputList.add(Integer.parseInt(line));
+			}
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
         }
@@ -40,15 +38,21 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 	}
 
 	@Override
-	public ProcessResponse writeOutput(ComputationResult compResult) {
-		// temporary input for testing purposes
-		String filePath = "src/output.txt";
+	public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult) {
+		String filePath = outputSource.getFilePath();
 		
-		try (FileWriter writer = new FileWriter(filePath)) {
-			for (Integer i : compResult.getPrimeList()) {
+		// pass true as second argument to FileWriter to append to file
+		try (FileWriter writer = new FileWriter(filePath, true)) {
+			List<Integer> primes = compResult.getPrimeList();
+			for (Integer i : primes) {
 				writer.write(i.toString());
+				if (i != primes.get(primes.size() - 1)) {
+					writer.write(delim.getDelim());
+				}
 			}
-			writer.write("\n");
+			if (!lastResult) {
+				writer.write(',');
+			}
 		} catch (IOException e) {
             return ProcessResponse.FAIL;
         }

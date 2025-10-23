@@ -16,8 +16,12 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	private List<ComputationResult> results;
 	
 	public UserRequestNetworkAPI() {
-		storage = new DataStorageProcessAPI();
-		engine = new ComputeComponentAPI();
+		this(new DataStorageProcessAPI(), new ComputeComponentAPI());
+	}
+
+	public UserRequestNetworkAPI(DataStorageProcessAPI storage, ComputeComponentAPI engine) {
+		this.storage = storage;
+		this.engine = engine;
 	}
 
 	@Override
@@ -25,7 +29,7 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 		if (storage.setInputSource(inputSource).isSuccess()) {
 			return ProcessResponse.SUCCESS;
 		}
-		return ProcessResponse.FAIL;
+		throw new RuntimeException("Failed to set input source");
 	}
 	
 	@Override
@@ -33,7 +37,7 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 		if (storage.setOutputSource(outputSource).isSuccess()) {
 			return ProcessResponse.SUCCESS;
 		}
-		return ProcessResponse.FAIL;
+		throw new RuntimeException("Failed to set output source");
 	}
 	
 	public void requestReadInput() {
@@ -50,8 +54,12 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	}
 	
 	public void requestWriteResults() {
+		boolean lastResult = false;
 		for (ComputationResult r : results) {
-			storage.writeOutput(r);
+			if (r == results.get(results.size() - 1)) {
+				lastResult = true;
+			}
+			storage.writeOutput(r, lastResult);
 		}
 	}
 }

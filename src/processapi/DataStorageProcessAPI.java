@@ -12,9 +12,9 @@ public interface DataStorageProcessAPI {
 
 	InputInts readInput();
 
-	ProcessResponse writeOutput(ComputationResult compResult);
-
 	public ProcessResponse setInputSource(InputSource inputSource);
 	
 	public ProcessResponse setOutputSource(OutputSource outputSource);
+
+	ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult);
 }
