@@ -13,6 +13,6 @@ public class ComputeDataStorageAPIPrototype {
 		InputInts inputInts = processApi.readInput();
 		
 		// data storage system will write to output source here
-		processApi.writeOutput(new ComputationResult());
+		//processApi.writeOutput(new ComputationResult());
 	}
 }

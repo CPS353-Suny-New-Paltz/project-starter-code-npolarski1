@@ -54,8 +54,12 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	}
 	
 	public void requestWriteResults() {
+		boolean lastResult = false;
 		for (ComputationResult r : results) {
-			storage.writeOutput(r);
+			if (r == results.get(results.size() - 1)) {
+				lastResult = true;
+			}
+			storage.writeOutput(r, lastResult);
 		}
 	}
 }

@@ -24,7 +24,7 @@ public class TestDataStoreAPI implements DataStorageProcessAPI {
 		return new InputInts(inputSource.getInput());
 	}
 
-	public ProcessResponse writeOutput(ComputationResult compResult) {
+	public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult) {
 		if (outputSource == null) {
 			return ProcessResponse.FAIL;
 		}

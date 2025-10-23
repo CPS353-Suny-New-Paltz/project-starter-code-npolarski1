@@ -38,16 +38,21 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 	}
 
 	@Override
-	public ProcessResponse writeOutput(ComputationResult compResult) {
+	public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult) {
 		String filePath = outputSource.getFilePath();
 		
 		// pass true as second argument to FileWriter to append to file
 		try (FileWriter writer = new FileWriter(filePath, true)) {
-			for (Integer i : compResult.getPrimeList()) {
+			List<Integer> primes = compResult.getPrimeList();
+			for (Integer i : primes) {
 				writer.write(i.toString());
-				writer.write(delim.getDelim());
+				if (i != primes.get(primes.size() - 1)) {
+					writer.write(delim.getDelim());
+				}
 			}
-			writer.write(",");
+			if (!lastResult) {
+				writer.write(',');
+			}
 		} catch (IOException e) {
             return ProcessResponse.FAIL;
         }
