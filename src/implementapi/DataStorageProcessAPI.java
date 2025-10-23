@@ -38,8 +38,7 @@ public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
 	}
 
 	@Override
-	public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult)
-	{
+	public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult) {
 		if (compResult == null) {
 			throw new IllegalArgumentException("Computation result cannot be null");
 		}
