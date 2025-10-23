@@ -3,6 +3,8 @@ package smoketest;
 import java.util.ArrayList;
 
 import shared.ComputationResult;
+import shared.InputSource;
+import shared.OutputSource;
 import shared.ProcessResponse;
 
 import org.junit.jupiter.api.Test;
@@ -15,15 +17,18 @@ public class TestComputeDataStorageAPI {
 	@Test
 	public void testReadInput() {
 		DataStorageProcessAPI testAPI = new DataStorageProcessAPI();
+		testAPI.setInputSource(new InputSource("test/smoketest/smokeTestInput.txt"));
 		assert testAPI.readInput() != null;
 	}
-	
+
 	@Test
 	public void testWriteOutput() {
 		ComputationResult testResult = new ComputationResult();
 		testResult.setPrimeList(new ArrayList<Integer>());
 		DataStorageProcessAPI testAPI = new DataStorageProcessAPI();
-		ProcessResponse status = testAPI.writeOutput(testResult);
+		testAPI.setOutputSource(new OutputSource("test/smoketest/smokeTestOutput.txt"));
+		boolean lastResult = true;
+		ProcessResponse status = testAPI.writeOutput(testResult, lastResult);
 		assert status.isSuccess();
 	}
  }
