@@ -46,16 +46,22 @@ public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
 	}
 
 	public List<ComputationResult> compute() {
-		List<Integer> inputs = input.getInts();
-		List<ComputationResult> outputs = new ArrayList<ComputationResult>();
-		
-		for (Integer n : inputs) {
-			ComputationResult currentOutput = new ComputationResult();
-			currentOutput.setPrimeList(calculatePrimes(n));
-			outputs.add(currentOutput);
+		try {
+			List<Integer> inputs = input.getInts();
+			List<ComputationResult> outputs = new ArrayList<ComputationResult>();
+
+			for (Integer n : inputs) {
+				ComputationResult currentOutput = new ComputationResult();
+				currentOutput.setPrimeList(calculatePrimes(n));
+				outputs.add(currentOutput);
+			}
+
+			return outputs;
+		} catch (Exception e) {
+			// Exception handling
+			System.err.println("Error during computation: " + e.getMessage());
+			return Collections.emptyList();
 		}
-		
-		return outputs;
 	}
 	
 	public void setInput(InputInts input) {
