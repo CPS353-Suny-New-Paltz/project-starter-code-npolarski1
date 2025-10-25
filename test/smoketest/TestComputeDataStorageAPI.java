@@ -22,6 +22,16 @@ public class TestComputeDataStorageAPI {
 	}
 
 	@Test
+	public void testSetInputSourceValidation() {
+		try {
+		DataStorageProcessAPI testAPI = new DataStorageProcessAPI();
+		testAPI.setInputSource(null);
+		} catch (IllegalArgumentException e) {
+			assert e.getMessage().equals("Input source cannot be null");
+		}
+	}
+
+	@Test
 	public void testWriteOutput() {
 		ComputationResult testResult = new ComputationResult();
 		testResult.setPrimeList(new ArrayList<Integer>());
