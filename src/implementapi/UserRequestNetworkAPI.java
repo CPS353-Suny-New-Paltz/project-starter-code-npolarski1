@@ -20,12 +20,22 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	}
 
 	public UserRequestNetworkAPI(DataStorageProcessAPI storage, ComputeComponentAPI engine) {
+		if (storage == null) {
+			throw new IllegalArgumentException("Storage cannot be null");
+		}
+		if (engine == null) {
+			throw new IllegalArgumentException("Compute engine cannot be null");
+		}
+		
 		this.storage = storage;
 		this.engine = engine;
 	}
 
 	@Override
 	public ProcessResponse processInputSource(InputSource inputSource) {
+		if (inputSource == null) {
+			throw new IllegalArgumentException("Input source cannot be null");
+		}
 		if (storage.setInputSource(inputSource).isSuccess()) {
 			return ProcessResponse.SUCCESS;
 		}
@@ -34,6 +44,9 @@ public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
 	
 	@Override
 	public ProcessResponse processOutputSource(OutputSource outputSource) {
+		if (outputSource == null) {
+			throw new IllegalArgumentException("Output source cannot be null");
+		}
 		if (storage.setOutputSource(outputSource).isSuccess()) {
 			return ProcessResponse.SUCCESS;
 		}

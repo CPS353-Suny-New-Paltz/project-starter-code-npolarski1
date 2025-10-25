@@ -59,6 +59,9 @@ public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
 	}
 	
 	public void setInput(InputInts input) {
+		if (input == null) {
+			throw new IllegalArgumentException("Input cannot be null");
+		}
 		this.input = input;
 	}
 }
