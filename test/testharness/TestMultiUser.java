@@ -1,4 +1,4 @@
-package testHarness;
+package testharness;
 
 import API_Package.MultithreadedNetworkAPI;
 import java.io.File;
