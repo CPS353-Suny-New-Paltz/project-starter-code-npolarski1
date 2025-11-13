@@ -45,6 +45,10 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 		
 		String filePath = outputSource.getFilePath();
 		
+		if (delim == null) {
+			delim = new Delimiter(";");
+		}
+		
 		// pass true as second argument to FileWriter to append to file
 		try (FileWriter writer = new FileWriter(filePath, true)) {
 			List<Integer> primes = compResult.getPrimeList();
