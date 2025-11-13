@@ -26,7 +26,6 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 		List<Integer> inputList = new ArrayList<Integer>();
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-			delim = new Delimiter(reader.readLine());
 			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 				inputList.add(Integer.parseInt(line));
 			}
@@ -79,5 +78,9 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 		}
 		this.outputSource = outputSource;
 		return ProcessResponse.SUCCESS;
+	}
+
+	public void setDelimiter(Delimiter delim) {
+		this.delim = delim;
 	}
 }

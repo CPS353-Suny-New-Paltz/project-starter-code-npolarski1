@@ -4,6 +4,7 @@ import project.annotations.NetworkAPI;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
+import shared.Delimiter;
 
 @NetworkAPI
 public interface UserRequestNetworkAPI {
@@ -19,4 +20,6 @@ public interface UserRequestNetworkAPI {
 	public ProcessResponse requestStartComputation();
 	
 	public void requestWriteResults();
+	
+	public void processDelimiter(Delimiter delim);
 }

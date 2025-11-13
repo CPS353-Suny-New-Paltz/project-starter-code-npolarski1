@@ -5,6 +5,7 @@ import java.io.File;
 import networkapi.UserRequestNetworkAPI;
 import shared.InputSource;
 import shared.OutputSource;
+import shared.Delimiter;
 
 public class TestUser {
 	
@@ -24,7 +25,7 @@ public class TestUser {
 		// run the compute job specified by inputPath, outputPath, and delimiter
 		coordinator.processInputSource(new InputSource(inputPath));
 		coordinator.processOutputSource(new OutputSource(outputPath));
-		// coordinator.setDelimiter(delimiter);
+		coordinator.processDelimiter(new Delimiter(String.valueOf(delimiter)));
 		coordinator.requestReadInput();
 		coordinator.passInput();
 		coordinator.requestStartComputation();

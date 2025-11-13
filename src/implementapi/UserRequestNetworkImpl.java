@@ -122,4 +122,12 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 			System.err.println("Error during requestWriteResults: " + e.getMessage());
 		}
 	}
+	
+	public void processDelimiter(shared.Delimiter delim) {
+		try {
+			storage.setDelimiter(delim);
+		} catch (Exception e) {
+			System.err.println("Error processing delimiter: " + e.getMessage());
+		}
+	}
 }
