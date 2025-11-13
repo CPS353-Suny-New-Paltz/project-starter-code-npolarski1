@@ -9,12 +9,12 @@ import shared.ProcessResponse;
 
 public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI {
 	
-	// Make the storage and engine per-thread so a single coordinator can be shared by
-	// multiple concurrent users without clobbering each other's state.
+	// make the storage and engine per-thread so a single coordinator can be shared by
+	// multiple concurrent users
 	private ThreadLocal<DataStorageProcessImpl> storage;
 	private ThreadLocal<ComputeComponentImpl> engine;
 	
-	// Per-thread request state
+	// per-thread request state
 	private ThreadLocal<InputInts> input;
 	private ThreadLocal<List<ComputationResult>> results;
 	
@@ -30,11 +30,11 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 			throw new IllegalArgumentException("Compute engine cannot be null");
 		}
 		
-		// ThreadLocal suppliers create a fresh instance per thread using the provided prototypes
+		// create a fresh instance of storage and engine per thread
 		this.storage = ThreadLocal.withInitial(() -> new DataStorageProcessImpl());
 		this.engine = ThreadLocal.withInitial(() -> new ComputeComponentImpl());
 		
-		// Initialize per-thread containers
+		// initialize per-thread containers
 		this.input = new ThreadLocal<>();
 		this.results = new ThreadLocal<>();
 	}
