@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import implementapi.ComputeComponentAPI;
+import implementapi.ComputeComponentImpl;
 import shared.ComputationResult;
 import shared.InputInts;
 
@@ -15,7 +15,7 @@ public class TestComputeComponentAPI {
 	public void testCompute() {
 		List<Integer> inputInts = new ArrayList<Integer>();
 		inputInts.add(5);
-		ComputeComponentAPI testApi = new ComputeComponentAPI();
+		ComputeComponentImpl testApi = new ComputeComponentImpl();
 		InputInts wrappedInput = new InputInts(inputInts);
 		testApi.setInput(wrappedInput);
 		List<ComputationResult> results = testApi.compute();
@@ -31,7 +31,7 @@ public class TestComputeComponentAPI {
 		List<Integer> inputInts = new ArrayList<Integer>();
 		inputInts.add(0);
 		inputInts.add(1);
-		ComputeComponentAPI testApi = new ComputeComponentAPI();
+		ComputeComponentImpl testApi = new ComputeComponentImpl();
 		InputInts wrappedInput = new InputInts(inputInts);
 		testApi.setInput(wrappedInput);
 		List<ComputationResult> results = testApi.compute();

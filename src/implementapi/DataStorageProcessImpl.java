@@ -13,7 +13,7 @@ import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
 
-public class DataStorageProcessAPI implements processapi.DataStorageProcessAPI {
+public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI {
 	
 	private InputSource inputSource;
 	private OutputSource outputSource;

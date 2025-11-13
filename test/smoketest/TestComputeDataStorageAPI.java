@@ -9,14 +9,14 @@ import shared.ProcessResponse;
 
 import org.junit.jupiter.api.Test;
 
-import implementapi.DataStorageProcessAPI;
+import implementapi.DataStorageProcessImpl;
 
 public class TestComputeDataStorageAPI {
 	
 	// smoke tests
 	@Test
 	public void testReadInput() {
-		DataStorageProcessAPI testAPI = new DataStorageProcessAPI();
+		DataStorageProcessImpl testAPI = new DataStorageProcessImpl();
 		testAPI.setInputSource(new InputSource("test/smoketest/smokeTestInput.txt"));
 		assert testAPI.readInput() != null;
 	}
@@ -24,7 +24,7 @@ public class TestComputeDataStorageAPI {
 	@Test
 	public void testSetInputSourceValidation() {
 		try {
-		DataStorageProcessAPI testAPI = new DataStorageProcessAPI();
+		DataStorageProcessImpl testAPI = new DataStorageProcessImpl();
 		testAPI.setInputSource(null);
 		} catch (IllegalArgumentException e) {
 			assert e.getMessage().equals("Input source cannot be null");
@@ -35,7 +35,7 @@ public class TestComputeDataStorageAPI {
 	public void testWriteOutput() {
 		ComputationResult testResult = new ComputationResult();
 		testResult.setPrimeList(new ArrayList<Integer>());
-		DataStorageProcessAPI testAPI = new DataStorageProcessAPI();
+		DataStorageProcessImpl testAPI = new DataStorageProcessImpl();
 		testAPI.setOutputSource(new OutputSource("test/smoketest/smokeTestOutput.txt"));
 		boolean lastResult = true;
 		ProcessResponse status = testAPI.writeOutput(testResult, lastResult);

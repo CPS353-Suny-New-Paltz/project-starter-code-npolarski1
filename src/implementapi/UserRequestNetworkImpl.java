@@ -7,19 +7,19 @@ import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
 
-public class UserRequestNetworkAPI implements networkapi.UserRequestNetworkAPI {
+public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI {
 	
-	private DataStorageProcessAPI storage;
-	private ComputeComponentAPI engine;
+	private DataStorageProcessImpl storage;
+	private ComputeComponentImpl engine;
 	
 	private InputInts input;
 	private List<ComputationResult> results;
 	
-	public UserRequestNetworkAPI() {
-		this(new DataStorageProcessAPI(), new ComputeComponentAPI());
+	public UserRequestNetworkImpl() {
+		this(new DataStorageProcessImpl(), new ComputeComponentImpl());
 	}
 
-	public UserRequestNetworkAPI(DataStorageProcessAPI storage, ComputeComponentAPI engine) {
+	public UserRequestNetworkImpl(DataStorageProcessImpl storage, ComputeComponentImpl engine) {
 		if (storage == null) {
 			throw new IllegalArgumentException("Storage cannot be null");
 		}
