@@ -4,14 +4,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import implementapi.ComputeComponentAPI;
+import implementapi.ComputeComponentImpl;
 import java.util.List;
 
 public class ComputeComponentAPIExceptionHandlingTest {
 
     @Test
     void compute_whenInputNotSet_returnsEmptyListNotException() {
-        ComputeComponentAPI api = new ComputeComponentAPI();
+        ComputeComponentImpl api = new ComputeComponentImpl();
         // intentionally don't call setInput to make compute() throw a NullPointerException
         List<?> result = api.compute();
 

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import implementapi.ComputeComponentAPI;
-import implementapi.UserRequestNetworkAPI;
+import implementapi.ComputeComponentImpl;
+import implementapi.UserRequestNetworkImpl;
 import shared.ComputationResult;
 import shared.InputInts;
 import shared.InputSource;
@@ -16,8 +16,8 @@ public class ComputeEngineIntegrationTest {
 	@Test
 	public void computeEngineTest() {
 		TestDataStoreAPI testApi = new TestDataStoreAPI();
-		ComputeComponentAPI testComponentApi = new ComputeComponentAPI();
-		UserRequestNetworkAPI testUserComputeApi = new UserRequestNetworkAPI();
+		ComputeComponentImpl testComponentApi = new ComputeComponentImpl();
+		UserRequestNetworkImpl testUserComputeApi = new UserRequestNetworkImpl();
 		
 		TestInputSource inputSource = new TestInputSource();
 		List<Integer> input = new ArrayList<Integer>();

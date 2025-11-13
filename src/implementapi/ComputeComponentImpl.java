@@ -6,7 +6,7 @@ import java.util.List;
 import shared.ComputationResult;
 import shared.InputInts;
 
-public class ComputeComponentAPI implements conceptualapi.ComputeComponentAPI {
+public class ComputeComponentImpl implements conceptualapi.ComputeComponentAPI {
 	
 	private InputInts input;
 	

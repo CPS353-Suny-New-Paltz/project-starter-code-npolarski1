@@ -1,7 +1,7 @@
 package smoketest;
 import org.junit.jupiter.api.Test;
 
-import implementapi.UserRequestNetworkAPI;
+import implementapi.UserRequestNetworkImpl;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
@@ -11,7 +11,7 @@ public class TestUserComputeAPI {
 	// smoke tests
 	@Test
 	public void testProcessInputSourceNoDelimiter() {
-		UserRequestNetworkAPI testAPI = new UserRequestNetworkAPI();
+		UserRequestNetworkImpl testAPI = new UserRequestNetworkImpl();
 		InputSource testInputSource = new InputSource(System.in);
 		ProcessResponse testResponse = testAPI.processInputSource(testInputSource);
 		assert testResponse.isSuccess();
@@ -19,7 +19,7 @@ public class TestUserComputeAPI {
 	
 	@Test
 	public void testProcessOutputSource() {
-		UserRequestNetworkAPI testAPI = new UserRequestNetworkAPI();
+		UserRequestNetworkImpl testAPI = new UserRequestNetworkImpl();
 		OutputSource testOutputSource = new OutputSource();
 		ProcessResponse testResponse = testAPI.processOutputSource(testOutputSource);
 		assert testResponse.isSuccess();

@@ -1,6 +1,6 @@
 package project.checkpointtests;
 
-import implementapi.UserRequestNetworkAPI;
+import implementapi.UserRequestNetworkImpl;
 import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
@@ -14,9 +14,9 @@ public class ManualTestingFramework {
         // TODO 1:
         // Instantiate a real (ie, class definition lives in the src/ folder) implementation 
         // of all 3 APIs
-        implementapi.DataStorageProcessAPI storageApi = new implementapi.DataStorageProcessAPI();
-        implementapi.ComputeComponentAPI computeApi = new implementapi.ComputeComponentAPI();
-        UserRequestNetworkAPI userApi = new UserRequestNetworkAPI(storageApi, computeApi);
+        implementapi.DataStorageProcessImpl storageApi = new implementapi.DataStorageProcessImpl();
+        implementapi.ComputeComponentImpl computeApi = new implementapi.ComputeComponentImpl();
+        UserRequestNetworkImpl userApi = new UserRequestNetworkImpl(storageApi, computeApi);
 
         // TODO 2:
         // Delegate IO and computation to the UserRequestNetworkAPI. The network API will
