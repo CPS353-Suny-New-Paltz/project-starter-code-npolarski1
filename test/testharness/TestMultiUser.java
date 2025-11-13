@@ -10,9 +10,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 import networkapi.UserRequestNetworkAPI;
 import implementapi.UserRequestNetworkImpl;
@@ -79,7 +79,7 @@ public class TestMultiUser {
 		// Check that the output is the same for multi-threaded and single-threaded
 		List<String> singleThreaded = loadAllOutput(singleThreadFilePrefix, nThreads);
 		List<String> multiThreaded = loadAllOutput(multiThreadFilePrefix, nThreads);
-		Assert.assertEquals(singleThreaded, multiThreaded);
+		Assertions.assertEquals(singleThreaded, multiThreaded);
 	}
 
 	private List<String> loadAllOutput(String prefix, int nThreads) throws IOException {
