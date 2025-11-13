@@ -2,14 +2,17 @@ package testharness;
 
 import java.io.File;
 
+import networkapi.UserRequestNetworkAPI;
+import shared.InputSource;
+import shared.OutputSource;
 
 public class TestUser {
 	
 	// TODO 3: change the type of this variable to the name you're using for your
 	// @NetworkAPI interface; also update the parameter passed to the constructor
-	private final ComputationCoordinator coordinator;
+	private final UserRequestNetworkAPI coordinator;
 
-	public TestUser(ComputationCoordinator coordinator) {
+	public TestUser(UserRequestNetworkAPI coordinator) {
 		this.coordinator = coordinator;
 	}
 
@@ -19,6 +22,13 @@ public class TestUser {
 		
 		// TODO 4: Call the appropriate method(s) on the coordinator to get it to 
 		// run the compute job specified by inputPath, outputPath, and delimiter
+		coordinator.processInputSource(new InputSource(inputPath));
+		coordinator.processOutputSource(new OutputSource(outputPath));
+		// coordinator.setDelimiter(delimiter);
+		coordinator.requestReadInput();
+		coordinator.passInput();
+		coordinator.requestStartComputation();
+		coordinator.requestWriteResults();
 	}
 
 }
