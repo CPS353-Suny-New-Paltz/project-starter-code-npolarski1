@@ -16,21 +16,15 @@ import org.junit.jupiter.api.Assertions;
 
 import networkapi.UserRequestNetworkAPI;
 import implementapi.UserRequestNetworkImpl;
+import implementapi.MultithreadedUserRequestNetworkImpl;
 
 public class TestMultiUser {
 	
-	// TODO 1: change the type of this variable to the name you're using for your @NetworkAPI
-	// interface
 	private UserRequestNetworkAPI coordinator;
-//	private MultithreadedNetworkAPI networkAPI;
 	
 	@BeforeEach
 	public void initializeComputeEngine() {
-//		networkAPI = new MultithreadedNetworkAPI();
-		//TODO 2: create an instance of the implementation of your @NetworkAPI; this is the component
-		// that the user will make requests to
-		// Store it in the 'coordinator' instance variable
-		coordinator = new UserRequestNetworkImpl();
+		coordinator = new MultithreadedUserRequestNetworkImpl();
 	}
 	public void cleanup() {
 //        if (networkAPI != null) {
