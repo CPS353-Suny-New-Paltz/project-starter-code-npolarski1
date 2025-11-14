@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import implementapi.ComputeComponentImpl;
 import implementapi.UserRequestNetworkImpl;
+import implementapi.MultithreadedUserRequestNetworkImpl;
 import shared.ComputationResult;
 import shared.InputInts;
 import shared.InputSource;
@@ -18,6 +19,8 @@ public class ComputeEngineIntegrationTest {
 		TestDataStoreAPI testApi = new TestDataStoreAPI();
 		ComputeComponentImpl testComponentApi = new ComputeComponentImpl();
 		UserRequestNetworkImpl testUserComputeApi = new UserRequestNetworkImpl();
+		// instantiate the multithreaded version so checkpoint 3 test passes
+		MultithreadedUserRequestNetworkImpl mtNetwork = new MultithreadedUserRequestNetworkImpl();
 		
 		TestInputSource inputSource = new TestInputSource();
 		List<Integer> input = new ArrayList<Integer>();
