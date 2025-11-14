@@ -101,7 +101,9 @@ public class MultithreadedUserRequestNetworkImpl implements networkapi.UserReque
         for (int t = 0; t < numTasks; t++) {
             final int start = t * chunkSize;
             final int end = Math.min(start + chunkSize, total);
-            if (start >= end) break;
+            if (start >= end) {
+            	break;
+            }
             final List<Integer> subList = ints.subList(start, end);
             tasks.add(() -> {
                 // each task gets its own compute engine instance
