@@ -86,9 +86,14 @@ public class TestMultiUser {
 		return result;
 	}
 	@Test
-    public void smokeTest() {
-//        List<String> requests = List.of("test1", "test2", "test3");
-//        List<String> results = networkAPI.processRequests(requests);
-//        Assert.assertEquals(requests.size(), results.size());
+	public void smokeTest() throws Exception {
+        // smoke test uses the single-threaded implementation
+        UserRequestNetworkAPI single = new UserRequestNetworkImpl();
+        TestUser testUser = new TestUser(single);
+        File out = new File("testMultiUser.smokeTest.singleThreadOut.tmp");
+        out.deleteOnExit();
+        testUser.run(out.getCanonicalPath());
+        List<String> lines = Files.readAllLines(out.toPath());
+        Assertions.assertFalse(lines.isEmpty(), "Smoke test output should not be empty");
     }
 }
