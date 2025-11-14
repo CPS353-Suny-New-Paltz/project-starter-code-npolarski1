@@ -9,26 +9,34 @@ import shared.ProcessResponse;
 
 public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI {
 	
-	private DataStorageProcessImpl storage;
-	private ComputeComponentImpl engine;
+	// make the storage and engine per-thread so a single coordinator can be shared by
+	// multiple concurrent users
+	private ThreadLocal<DataStorageProcessImpl> storage;
+	private ThreadLocal<ComputeComponentImpl> engine;
 	
-	private InputInts input;
-	private List<ComputationResult> results;
+	// per-thread request state
+	private ThreadLocal<InputInts> input;
+	private ThreadLocal<List<ComputationResult>> results;
 	
 	public UserRequestNetworkImpl() {
 		this(new DataStorageProcessImpl(), new ComputeComponentImpl());
 	}
 
-	public UserRequestNetworkImpl(DataStorageProcessImpl storage, ComputeComponentImpl engine) {
-		if (storage == null) {
+	public UserRequestNetworkImpl(DataStorageProcessImpl storageInstance, ComputeComponentImpl engineInstance) {
+		if (storageInstance == null) {
 			throw new IllegalArgumentException("Storage cannot be null");
 		}
-		if (engine == null) {
+		if (engineInstance == null) {
 			throw new IllegalArgumentException("Compute engine cannot be null");
 		}
 		
-		this.storage = storage;
-		this.engine = engine;
+		// create a fresh instance of storage and engine per thread
+		this.storage = ThreadLocal.withInitial(() -> new DataStorageProcessImpl());
+		this.engine = ThreadLocal.withInitial(() -> new ComputeComponentImpl());
+		
+		// initialize per-thread containers
+		this.input = new ThreadLocal<>();
+		this.results = new ThreadLocal<>();
 	}
 
 	@Override
@@ -37,7 +45,7 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 			throw new IllegalArgumentException("Input source cannot be null");
 		}
 		try {
-			if (storage.setInputSource(inputSource).isSuccess()) {
+			if (storage.get().setInputSource(inputSource).isSuccess()) {
 				return ProcessResponse.SUCCESS;
 			}
 			return ProcessResponse.FAIL;
@@ -54,7 +62,7 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 			throw new IllegalArgumentException("Output source cannot be null");
 		}
 		try {
-			if (storage.setOutputSource(outputSource).isSuccess()) {
+			if (storage.get().setOutputSource(outputSource).isSuccess()) {
 				return ProcessResponse.SUCCESS;
 			}
 			return ProcessResponse.FAIL;
@@ -67,22 +75,22 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 	
 	public void requestReadInput() {
 		try {
-			InputInts read = storage.readInput();
+			InputInts read = storage.get().readInput();
 			// Ensure we never leave input null
 			if (read == null) {
-				input = new InputInts(java.util.Collections.emptyList());
+				input.set(new InputInts(java.util.Collections.emptyList()));
 			} else {
-				input = read;
+				input.set(read);
 			}
 		} catch (Exception e) {
 			System.err.println("Error reading input: " + e.getMessage());
-			input = new InputInts(java.util.Collections.emptyList());
+			input.set(new InputInts(java.util.Collections.emptyList()));
 		}
 	}
 	
 	public void passInput() {
 		try {
-			engine.setInput(input);
+			engine.get().setInput(input.get());
 		} catch (Exception e) {
 			System.err.println("Error passing input to compute engine: " + e.getMessage());
 		}
@@ -90,10 +98,13 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 	
 	public ProcessResponse requestStartComputation() {
 		try {
-			results = engine.compute();
-			if (results == null) {
+			List<ComputationResult> computed = engine.get().compute();
+			// store into thread-local results
+			if (computed == null) {
+				results.set(null);
 				return ProcessResponse.FAIL;
 			}
+			results.set(computed);
 			return ProcessResponse.SUCCESS;
 		} catch (Exception e) {
 			System.err.println("Error starting computation: " + e.getMessage());
@@ -103,16 +114,17 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 	
 	public void requestWriteResults() {
 		try {
-			if (results == null) {
+			List<ComputationResult> res = results.get();
+			if (res == null) {
 				return;
 			}
 			boolean lastResult = false;
-			for (ComputationResult r : results) {
-				if (r == results.get(results.size() - 1)) {
+			for (ComputationResult r : res) {
+				if (r == res.get(res.size() - 1)) {
 					lastResult = true;
 				}
 				try {
-					storage.writeOutput(r, lastResult);
+					storage.get().writeOutput(r, lastResult);
 				} catch (Exception e) {
 					// Log and continue attempting to write other results
 					System.err.println("Error writing result: " + e.getMessage());
@@ -120,6 +132,14 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 			}
 		} catch (Exception e) {
 			System.err.println("Error during requestWriteResults: " + e.getMessage());
+		}
+	}
+	
+	public void processDelimiter(shared.Delimiter delim) {
+		try {
+			storage.get().setDelimiter(delim);
+		} catch (Exception e) {
+			System.err.println("Error processing delimiter: " + e.getMessage());
 		}
 	}
 }

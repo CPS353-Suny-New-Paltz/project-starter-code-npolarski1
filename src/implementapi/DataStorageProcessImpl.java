@@ -21,13 +21,18 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 
 	@Override
 	public InputInts readInput() {
+		if (inputSource == null) {
+			throw new IllegalStateException("Input source has not been set");
+		}
 		String filePath = inputSource.getFilePath();
 		
 		List<Integer> inputList = new ArrayList<Integer>();
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-			delim = new Delimiter(reader.readLine());
 			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+				if (line.trim().isEmpty()) {
+					throw new NumberFormatException("Empty line encountered in input file");
+				}
 				inputList.add(Integer.parseInt(line));
 			}
         } catch (IOException e) {
@@ -44,7 +49,14 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 		}
 		// lastResult doesn't require checking as it is a boolean
 		
+		if (outputSource == null) {
+			throw new IllegalStateException("Output source has not been set");
+		}
 		String filePath = outputSource.getFilePath();
+		
+		if (delim == null) {
+			delim = new Delimiter(";");
+		}
 		
 		// pass true as second argument to FileWriter to append to file
 		try (FileWriter writer = new FileWriter(filePath, true)) {
@@ -67,7 +79,7 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 
 	public ProcessResponse setInputSource(InputSource inputSource) {
 		if (inputSource == null) {
-			throw new IllegalArgumentException("Input source cannot be null");
+			return ProcessResponse.FAIL;
 		}
 		this.inputSource = inputSource;
 		return ProcessResponse.SUCCESS;
@@ -75,9 +87,13 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 
 	public ProcessResponse setOutputSource(OutputSource outputSource) {
 		if (outputSource == null) {
-			throw new IllegalArgumentException("Output source cannot be null");
+			return ProcessResponse.FAIL;
 		}
 		this.outputSource = outputSource;
 		return ProcessResponse.SUCCESS;
+	}
+
+	public void setDelimiter(Delimiter delim) {
+		this.delim = delim;
 	}
 }
