@@ -78,8 +78,11 @@ public final class NetworkApiHelper {
     }
 
     public static void writeResults(DataStorageProcessImpl storage, List<ComputationResult> res) {
+    	if (storage == null) {
+			throw new IllegalArgumentException("Storage cannot be null");
+		}
         if (res == null) {
-            return;
+            throw new IllegalArgumentException("Results cannot be null");
         }
         try {
             boolean lastResult = false;
