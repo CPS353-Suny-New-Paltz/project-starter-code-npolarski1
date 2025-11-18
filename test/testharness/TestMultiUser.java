@@ -16,21 +16,15 @@ import org.junit.jupiter.api.Assertions;
 
 import networkapi.UserRequestNetworkAPI;
 import implementapi.UserRequestNetworkImpl;
+import implementapi.MultithreadedUserRequestNetworkImpl;
 
 public class TestMultiUser {
 	
-	// TODO 1: change the type of this variable to the name you're using for your @NetworkAPI
-	// interface
 	private UserRequestNetworkAPI coordinator;
-//	private MultithreadedNetworkAPI networkAPI;
 	
 	@BeforeEach
 	public void initializeComputeEngine() {
-//		networkAPI = new MultithreadedNetworkAPI();
-		//TODO 2: create an instance of the implementation of your @NetworkAPI; this is the component
-		// that the user will make requests to
-		// Store it in the 'coordinator' instance variable
-		coordinator = new UserRequestNetworkImpl();
+		coordinator = new MultithreadedUserRequestNetworkImpl();
 	}
 	public void cleanup() {
 //        if (networkAPI != null) {
@@ -92,9 +86,14 @@ public class TestMultiUser {
 		return result;
 	}
 	@Test
-    public void smokeTest() {
-//        List<String> requests = List.of("test1", "test2", "test3");
-//        List<String> results = networkAPI.processRequests(requests);
-//        Assert.assertEquals(requests.size(), results.size());
+	public void smokeTest() throws Exception {
+        // smoke test uses the single-threaded implementation
+        UserRequestNetworkAPI single = new UserRequestNetworkImpl();
+        TestUser testUser = new TestUser(single);
+        File out = new File("testMultiUser.smokeTest.singleThreadOut.tmp");
+        out.deleteOnExit();
+        testUser.run(out.getCanonicalPath());
+        List<String> lines = Files.readAllLines(out.toPath());
+        Assertions.assertFalse(lines.isEmpty(), "Smoke test output should not be empty");
     }
 }

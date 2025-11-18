@@ -18,24 +18,27 @@ public class OutputSource {
 	// create output file if it doesn't exist
 	public OutputSource(String outputFilePath) {
 		if (outputFilePath == null) {
-			throw new IllegalArgumentException("outputFilePath cannot be null");
+			System.err.println("Output file path cannot be null");
+			return;
 		}
 		this.outputSource = outputFilePath;
 		File f = new File(outputFilePath);
 		try {
 			File parent = f.getParentFile();
 			if (parent != null && !parent.exists()) {
-				throw new IllegalStateException("Parent directory does not exist for output file: " + outputFilePath);
+				System.err.println("Parent directory does not exist for output file: " + outputFilePath);
+				return;
 			}
 			if (!f.exists()) {
 				if (!f.createNewFile()) {
-					throw new IllegalStateException("Could not create output file: " + outputFilePath);
+					System.err.println("Could not create output file: " + outputFilePath);
 				}
 			} else if (f.isDirectory()) {
-				throw new IllegalStateException("Output path is a directory: " + outputFilePath);
+				System.err.println("Output path is a directory: " + outputFilePath);
 			}
 		} catch (IOException e) {
-			throw new IllegalStateException("Failed to create output file: " + outputFilePath, e);
+			System.err.println("Failed to create output file: " + outputFilePath);
+			return;
 		}
 	}
 
@@ -45,7 +48,8 @@ public class OutputSource {
 
 	public String getFilePath() {
 		if (!(outputSource instanceof String)) {
-			throw new IllegalStateException("Output source is not a file path");
+			System.err.println("Output source is not a file path");
+			return null;
 		}
 		return (String) outputSource;
 	}
