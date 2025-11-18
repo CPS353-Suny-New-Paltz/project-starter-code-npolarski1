@@ -18,8 +18,13 @@ public final class NetworkApiHelper {
     private NetworkApiHelper() {}
 
     public static ProcessResponse processInputSource(DataStorageProcessImpl storage, InputSource inputSource) {
+        if (storage == null) {
+            System.err.println("processInputSource called with null storage");
+            return ProcessResponse.FAIL;
+        }
         if (inputSource == null) {
-            throw new IllegalArgumentException("Input source cannot be null");
+            System.err.println("processInputSource called with null inputSource");
+            return ProcessResponse.FAIL;
         }
         try {
             if (storage.setInputSource(inputSource).isSuccess()) {
@@ -33,8 +38,13 @@ public final class NetworkApiHelper {
     }
 
     public static ProcessResponse processOutputSource(DataStorageProcessImpl storage, OutputSource outputSource) {
+        if (storage == null) {
+            System.err.println("processOutputSource called with null storage");
+            return ProcessResponse.FAIL;
+        }
         if (outputSource == null) {
-            throw new IllegalArgumentException("Output source cannot be null");
+            System.err.println("processOutputSource called with null outputSource");
+            return ProcessResponse.FAIL;
         }
         try {
             if (storage.setOutputSource(outputSource).isSuccess()) {
@@ -48,6 +58,10 @@ public final class NetworkApiHelper {
     }
 
     public static InputInts readInput(DataStorageProcessImpl storage) {
+        if (storage == null) {
+            System.err.println("readInput called with null storage");
+            return new InputInts(java.util.Collections.emptyList());
+        }
         try {
             InputInts read = storage.readInput();
             if (read == null) {
@@ -61,6 +75,10 @@ public final class NetworkApiHelper {
     }
 
     public static void passInputToEngine(ComputeComponentImpl engine, InputInts input) {
+        if (engine == null) {
+            System.err.println("passInputToEngine called with null engine");
+            return;
+        }
         try {
             engine.setInput(input);
         } catch (Exception e) {
@@ -69,20 +87,26 @@ public final class NetworkApiHelper {
     }
 
     public static List<ComputationResult> compute(ComputeComponentImpl engine) {
+        if (engine == null) {
+            System.err.println("compute called with null engine");
+            return java.util.Collections.emptyList();
+        }
         try {
             return engine.compute();
         } catch (Exception e) {
             System.err.println("Error starting computation: " + e.getMessage());
-            return null;
+            return java.util.Collections.emptyList();
         }
     }
 
     public static void writeResults(DataStorageProcessImpl storage, List<ComputationResult> res) {
-    	if (storage == null) {
-			throw new IllegalArgumentException("Storage cannot be null");
-		}
+        if (storage == null) {
+            System.err.println("writeResults called with null storage");
+            return;
+        }
         if (res == null) {
-            throw new IllegalArgumentException("Results cannot be null");
+            System.err.println("writeResults called with null results");
+            return;
         }
         try {
             boolean lastResult = false;
@@ -102,6 +126,14 @@ public final class NetworkApiHelper {
     }
 
     public static void processDelimiter(DataStorageProcessImpl storage, Delimiter delim) {
+        if (storage == null) {
+            System.err.println("processDelimiter called with null storage");
+            return;
+        }
+        if (delim == null) {
+            System.err.println("processDelimiter called with null delimiter");
+            return;
+        }
         try {
             storage.setDelimiter(delim);
         } catch (Exception e) {

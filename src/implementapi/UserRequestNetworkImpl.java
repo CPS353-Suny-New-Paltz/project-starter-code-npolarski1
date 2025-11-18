@@ -24,10 +24,12 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
 
     public UserRequestNetworkImpl(DataStorageProcessImpl storageInstance, ComputeComponentImpl engineInstance) {
         if (storageInstance == null) {
-            throw new IllegalArgumentException("Storage cannot be null");
+            System.err.println("Storage instance was null; using default DataStorageProcessImpl");
+            storageInstance = new DataStorageProcessImpl();
         }
         if (engineInstance == null) {
-            throw new IllegalArgumentException("Compute engine cannot be null");
+            System.err.println("Engine instance was null; using default ComputeComponentImpl");
+            engineInstance = new ComputeComponentImpl();
         }
         
         // create a fresh instance of storage and engine per thread

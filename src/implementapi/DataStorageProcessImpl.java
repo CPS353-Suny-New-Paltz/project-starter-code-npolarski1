@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import shared.ComputationResult;
@@ -22,7 +23,9 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 	@Override
 	public InputInts readInput() {
 		if (inputSource == null) {
-			throw new IllegalStateException("Input source has not been set");
+			// return empty input container instead of throwing exception
+			System.err.println("readInput called but input source has not been set");
+			return new InputInts(Collections.emptyList());
 		}
 		String filePath = inputSource.getFilePath();
 		
@@ -31,13 +34,21 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 			for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 				if (line.trim().isEmpty()) {
-					throw new NumberFormatException("Empty line encountered in input file");
+					// skip empty lines instead of throwing exception
+					System.err.println("Skipping empty line in input file: " + filePath);
+					continue;
 				}
-				inputList.add(Integer.parseInt(line));
+				try {
+					inputList.add(Integer.parseInt(line));
+				} catch (NumberFormatException nfe) {
+					// log and return empty list instead of throwing exception
+					System.err.println("Invalid integer in input file: '" + line + "' - skipping");
+				}
 			}
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
-        }
+		} catch (IOException e) {
+			System.err.println("Error reading file: " + e.getMessage());
+			return new InputInts(Collections.emptyList());
+		}
 		
 		return new InputInts(inputList);
 	}
@@ -45,12 +56,13 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 	@Override
 	public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult) {
 		if (compResult == null) {
-			throw new IllegalArgumentException("Computation result cannot be null");
+			System.err.println("writeOutput called with null computation result");
+			return ProcessResponse.FAIL;
 		}
-		// lastResult doesn't require checking as it is a boolean
 		
 		if (outputSource == null) {
-			throw new IllegalStateException("Output source has not been set");
+			System.err.println("writeOutput called but output source has not been set");
+			return ProcessResponse.FAIL;
 		}
 		String filePath = outputSource.getFilePath();
 		
@@ -71,8 +83,9 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 				writer.write(',');
 			}
 		} catch (IOException e) {
-            return ProcessResponse.FAIL;
-        }
+			System.err.println("Error writing output file: " + e.getMessage());
+			return ProcessResponse.FAIL;
+		}
 		
 		return ProcessResponse.SUCCESS;
 	}

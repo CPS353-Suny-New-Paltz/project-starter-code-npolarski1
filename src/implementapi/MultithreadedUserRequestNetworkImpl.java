@@ -48,7 +48,8 @@ public class MultithreadedUserRequestNetworkImpl implements networkapi.UserReque
      */
     public MultithreadedUserRequestNetworkImpl(int maxThreads) {
         if (maxThreads <= 0) {
-            throw new IllegalArgumentException("maxThreads must be > 0");
+            System.err.println("Invalid maxThreads value: " + maxThreads + "; falling back to DEFAULT_MAX_THREADS=" + DEFAULT_MAX_THREADS);
+            maxThreads = DEFAULT_MAX_THREADS;
         }
         this.computePool = Executors.newFixedThreadPool(maxThreads);
 

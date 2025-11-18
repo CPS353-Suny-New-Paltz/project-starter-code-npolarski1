@@ -66,7 +66,8 @@ public class ComputeComponentImpl implements conceptualapi.ComputeComponentAPI {
 	
 	public void setInput(InputInts input) {
 		if (input == null) {
-			throw new IllegalArgumentException("Input cannot be null");
+			System.err.println("setInput called with null; ignoring and leaving existing input unchanged");
+			return;
 		}
 		this.input = input;
 	}
