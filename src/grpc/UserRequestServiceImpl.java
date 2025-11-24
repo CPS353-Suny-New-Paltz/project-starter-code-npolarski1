@@ -1,4 +1,4 @@
-package networkapi;
+package grpc;
 
 import io.grpc.stub.StreamObserver;
 import shared.InputSource;
@@ -7,6 +7,8 @@ import shared.ProcessResponse;
 import shared.Delimiter;
 import shared.ProtoConverters;
 import com.google.protobuf.Empty;
+
+import networkapi.UserRequestNetworkAPI;
 import networkapi.grpc.Ack;
 
 public class UserRequestServiceImpl extends networkapi.grpc.UserRequestServiceGrpc.UserRequestServiceImplBase {
