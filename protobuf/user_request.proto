@@ -10,11 +10,11 @@ import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
 
 message InputSource {
-  google.protobuf.Any inputSource = 1;
+  optional google.protobuf.Any inputSource = 1;
 }
 
 message OutputSource {
-  google.protobuf.Any outputSource = 1;
+  optional google.protobuf.Any outputSource = 1;
 }
 
 message ProcessResponse {
@@ -23,16 +23,16 @@ message ProcessResponse {
     FAIL = 1;
   }
 
-  Code code = 1;
-  bool isSuccess = 2;
+  optional Code code = 1;
+  optional bool isSuccess = 2;
 }
 
 message Delimiter {
-  string delim = 1;
+  optional string delim = 1;
 }
 
 message Ack { // acknowledgment message for void returns since gRPC requires a return type
-  bool ok = 1;
+  optional bool ok = 1;
 }
 
 
