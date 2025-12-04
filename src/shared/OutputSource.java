@@ -1,6 +1,7 @@
 package shared;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class OutputSource {
@@ -15,7 +16,7 @@ public class OutputSource {
 		this.outputSource = outputSource;
 	}
 
-	// create output file if it doesn't exist
+	// create output file if it doesn't exist; if it does exist, wipe its contents
 	public OutputSource(String outputFilePath) {
 		if (outputFilePath == null) {
 			System.err.println("Output file path cannot be null");
@@ -35,9 +36,16 @@ public class OutputSource {
 				}
 			} else if (f.isDirectory()) {
 				System.err.println("Output path is a directory: " + outputFilePath);
+			} else {
+				// file exists and is a regular file - wipe it so we don't append to previous runs
+				try (FileWriter fw = new FileWriter(f, false)) {
+					// opening FileWriter with append=false wipes the file
+				} catch (IOException ioe) {
+					System.err.println("Failed to truncate existing output file: " + ioe.getMessage());
+				}
 			}
 		} catch (IOException e) {
-			System.err.println("Failed to create output file: " + outputFilePath);
+			System.err.println("Failed to create/wipe output file: " + outputFilePath);
 			return;
 		}
 	}
