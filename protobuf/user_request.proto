@@ -1,0 +1,48 @@
+syntax = "proto2";
+
+package networkapi;
+
+option java_multiple_files = true;
+option java_package = "networkapi.grpc";
+option java_outer_classname = "UserRequestApiProto";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+
+message InputSource {
+  optional google.protobuf.Any inputSource = 1;
+}
+
+message OutputSource {
+  optional google.protobuf.Any outputSource = 1;
+}
+
+message ProcessResponse {
+  enum Code {
+    SUCCESS = 0;
+    FAIL = 1;
+  }
+
+  optional Code code = 1;
+  optional bool isSuccess = 2;
+}
+
+message Delimiter {
+  optional string delim = 1;
+}
+
+message Ack { // acknowledgment message for void returns since gRPC requires a return type
+  optional bool ok = 1;
+}
+
+
+service UserRequestService {
+  rpc ProcessInputSource(InputSource) returns (ProcessResponse);
+  rpc ProcessOutputSource(OutputSource) returns (ProcessResponse);
+
+  rpc RequestReadInput(google.protobuf.Empty) returns (Ack);
+  rpc PassInput(google.protobuf.Empty) returns (Ack);
+  rpc RequestStartComputation(google.protobuf.Empty) returns (ProcessResponse);
+  rpc RequestWriteResults(google.protobuf.Empty) returns (Ack);
+  rpc ProcessDelimiter(Delimiter) returns (Ack);
+}
