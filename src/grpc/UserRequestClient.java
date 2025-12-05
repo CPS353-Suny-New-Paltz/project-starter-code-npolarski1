@@ -57,7 +57,9 @@ public class UserRequestClient {
                 if (p.isEmpty()) {
                 	continue;
                 }
-                try { ints.add(Integer.parseInt(p)); } catch (NumberFormatException e) {
+                try { 
+                	ints.add(Integer.parseInt(p)); 
+                } catch (NumberFormatException e) {
                     System.out.println("Skipping invalid number: " + p);
                 }
             }
