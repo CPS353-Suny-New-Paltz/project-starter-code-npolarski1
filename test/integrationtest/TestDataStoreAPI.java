@@ -52,20 +52,35 @@ public class TestDataStoreAPI implements DataStorageProcessAPI {
 	// Interface-compatible setters that adapt shared wrappers to test doubles
 	@Override
 	public ProcessResponse setInputSource(InputSource inputSource) {
-		if (inputSource == null || !(inputSource.getInputSource() instanceof TestInputSource)) {
+		if (inputSource == null) {
 			return ProcessResponse.FAIL;
 		}
-		this.inputSource = (TestInputSource) inputSource.getInputSource();
-		return ProcessResponse.SUCCESS;
+		// If manual ints were provided, adapt them into TestInputSource
+		if (inputSource.getManualInts() != null) {
+			TestInputSource tis = new TestInputSource();
+			List<Integer> ints = inputSource.getManualInts();
+			if (ints == null) ints = new ArrayList<Integer>();
+			tis.setInput(new ArrayList<Integer>(ints));
+			this.inputSource = tis;
+			return ProcessResponse.SUCCESS;
+		}
+		// If a file path was provided, we cannot adapt it to the in-memory TestInputSource
+		if (inputSource.getFilePath() != null) {
+			return ProcessResponse.FAIL;
+		}
+		return ProcessResponse.FAIL;
 	}
 
 	@Override
 	public ProcessResponse setOutputSource(OutputSource outputSource) {
-		if (outputSource == null || !(outputSource.getOutputSource() instanceof TestOutputSource)) {
+		if (outputSource == null) {
 			return ProcessResponse.FAIL;
 		}
-		this.outputSource = (TestOutputSource) outputSource.getOutputSource();
-		return ProcessResponse.SUCCESS;
+		// If a file path was provided, we cannot adapt it to the in-memory TestOutputSource
+		if (outputSource.getFilePath() != null) {
+			return ProcessResponse.FAIL;
+		}
+		return ProcessResponse.FAIL;
 	}
 
 	public ProcessResponse setInputSource(TestInputSource inputSource) {

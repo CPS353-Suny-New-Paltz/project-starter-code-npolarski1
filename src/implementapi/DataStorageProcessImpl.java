@@ -27,7 +27,17 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 			System.err.println("readInput called but input source has not been set");
 			return new InputInts(Collections.emptyList());
 		}
+		// If manual ints were provided directly, return them
+		if (inputSource.getManualInts() != null) {
+			List<Integer> provided = inputSource.getManualInts();
+			if (provided == null) return new InputInts(Collections.emptyList());
+			return new InputInts(new ArrayList<>(provided));
+		}
 		String filePath = inputSource.getFilePath();
+		if (filePath == null) {
+			System.err.println("No input file path provided and no manual ints present");
+			return new InputInts(Collections.emptyList());
+		}
 		
 		List<Integer> inputList = new ArrayList<Integer>();
 		

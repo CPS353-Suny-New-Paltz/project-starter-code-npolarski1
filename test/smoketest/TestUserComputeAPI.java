@@ -12,7 +12,7 @@ public class TestUserComputeAPI {
 	@Test
 	public void testProcessInputSourceNoDelimiter() {
 		UserRequestNetworkImpl testAPI = new UserRequestNetworkImpl();
-		InputSource testInputSource = new InputSource(System.in);
+		InputSource testInputSource = new InputSource();
 		ProcessResponse testResponse = testAPI.processInputSource(testInputSource);
 		assert testResponse.isSuccess();
 	}

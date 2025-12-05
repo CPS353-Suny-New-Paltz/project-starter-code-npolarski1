@@ -30,7 +30,7 @@ public class ComputeEngineIntegrationTest {
 		inputSource.setInput(input);
 		
 		// wire input into the user API and our in-memory data store
-		testUserComputeApi.processInputSource(new InputSource(inputSource));
+		testUserComputeApi.processInputSource(new InputSource(input));
 		testApi.setInputSource(inputSource);
 		
 		testApi.readInput();
