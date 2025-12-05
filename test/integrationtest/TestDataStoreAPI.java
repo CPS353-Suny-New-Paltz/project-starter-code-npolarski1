@@ -59,7 +59,9 @@ public class TestDataStoreAPI implements DataStorageProcessAPI {
 		if (inputSource.getManualInts() != null) {
 			TestInputSource tis = new TestInputSource();
 			List<Integer> ints = inputSource.getManualInts();
-			if (ints == null) ints = new ArrayList<Integer>();
+			if (ints == null) {
+				ints = new ArrayList<Integer>();
+			}
 			tis.setInput(new ArrayList<Integer>(ints));
 			this.inputSource = tis;
 			return ProcessResponse.SUCCESS;

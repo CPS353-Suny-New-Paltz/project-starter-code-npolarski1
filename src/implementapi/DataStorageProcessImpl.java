@@ -30,7 +30,9 @@ public class DataStorageProcessImpl implements processapi.DataStorageProcessAPI 
 		// If manual ints were provided directly, return them
 		if (inputSource.getManualInts() != null) {
 			List<Integer> provided = inputSource.getManualInts();
-			if (provided == null) return new InputInts(Collections.emptyList());
+			if (provided == null) {
+				return new InputInts(Collections.emptyList());
+			}
 			return new InputInts(new ArrayList<>(provided));
 		}
 		String filePath = inputSource.getFilePath();

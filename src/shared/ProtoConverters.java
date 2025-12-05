@@ -11,7 +11,9 @@ import java.util.List;
 public class ProtoConverters {
 
     public static shared.InputSource fromProto(InputSource proto) {
-        if (proto == null) return new shared.InputSource();
+        if (proto == null) {
+        	return new shared.InputSource();
+        }
         // If manual ints are present, prefer them
         if (proto.getManualIntsCount() > 0) {
             List<Integer> ints = new ArrayList<Integer>(proto.getManualIntsList());
@@ -26,7 +28,9 @@ public class ProtoConverters {
 
     public static InputSource toProto(shared.InputSource in) {
         InputSource.Builder b = InputSource.newBuilder();
-        if (in == null) return b.build();
+        if (in == null) {
+        	return b.build();
+        }
         if (in.getManualInts() != null && !in.getManualInts().isEmpty()) {
             b.addAllManualInts(in.getManualInts());
         } else if (in.getFilePath() != null) {
@@ -36,7 +40,9 @@ public class ProtoConverters {
     }
 
     public static shared.OutputSource fromProto(OutputSource proto) {
-        if (proto == null) return new shared.OutputSource();
+        if (proto == null) {
+        	return new shared.OutputSource();
+        }
         if (proto.hasFilePath()) {
             return new shared.OutputSource(proto.getFilePath());
         }
@@ -45,7 +51,9 @@ public class ProtoConverters {
 
     public static OutputSource toProto(shared.OutputSource out) {
         OutputSource.Builder b = OutputSource.newBuilder();
-        if (out == null) return b.build();
+        if (out == null) {
+        	return b.build();
+        }
         if (out.getFilePath() != null) {
             b.setFilePath(out.getFilePath());
         }

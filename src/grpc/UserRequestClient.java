@@ -54,7 +54,9 @@ public class UserRequestClient {
             String[] parts = nums.split("[\\s,]+"); // split by whitespace or comma
             List<Integer> ints = new ArrayList<>();
             for (String p : parts) {
-                if (p.isEmpty()) continue;
+                if (p.isEmpty()) {
+                	continue;
+                }
                 try { ints.add(Integer.parseInt(p)); } catch (NumberFormatException e) {
                     System.out.println("Skipping invalid number: " + p);
                 }
@@ -68,8 +70,9 @@ public class UserRequestClient {
 
         System.out.print("Optional delimiter (press Enter to skip, default is semicolon): ");
         String delim = scanner.nextLine();
-        if (delim == null) delim = ";";
-        if (delim.isEmpty()) delim = ";";
+        if (delim == null || delim.isEmpty()) {
+        	delim = ";";
+        }
 
         // build proto for output path
         networkapi.grpc.OutputSource protoOutput = OutputSource.newBuilder()
