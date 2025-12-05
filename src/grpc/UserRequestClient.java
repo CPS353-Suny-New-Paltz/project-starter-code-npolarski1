@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.google.protobuf.Any;
-import com.google.protobuf.ByteString;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import networkapi.grpc.Ack;
@@ -46,17 +43,15 @@ public class UserRequestClient {
         if (choice.equals("1")) {
             System.out.print("Path to input file: ");
             String path = scanner.nextLine().trim();
-            // warn if the file doesn't exist locally — server must be able to access the same path
             if (!Files.exists(Paths.get(path))) {
                 System.out.println("Warning: file '" + path + "' does not exist on this machine. Ensure the server can access this path.");
             }
-            // send the file path (not raw contents) in the Any so the server can open it locally
-            Any any = Any.newBuilder().setValue(ByteString.copyFromUtf8(path)).build();
-            protoInput = InputSource.newBuilder().setInputSource(any).build();
+            // send the file path in the proto field file_path
+            protoInput = InputSource.newBuilder().setFilePath(path).build();
         } else {
             System.out.print("Enter numbers (space or comma separated): ");
             String nums = scanner.nextLine().trim();
-            String[] parts = nums.split("[\\s,]+");
+            String[] parts = nums.split("[\\s,]+"); // split by whitespace or comma
             List<Integer> ints = new ArrayList<>();
             for (String p : parts) {
                 if (p.isEmpty()) continue;
@@ -64,33 +59,30 @@ public class UserRequestClient {
                     System.out.println("Skipping invalid number: " + p);
                 }
             }
-            // Convert to a simple serialized form: comma-separated string bytes
-            String serialized = String.join(",", ints.stream().map(String::valueOf).toArray(String[]::new));
-            Any any = Any.newBuilder().setValue(ByteString.copyFromUtf8(serialized)).build();
-            protoInput = InputSource.newBuilder().setInputSource(any).build();
+            // put manual integers into the repeated manual_ints field
+            protoInput = InputSource.newBuilder().addAllManualInts(ints).build();
         }
 
         System.out.print("Output file path: ");
         String outputPath = scanner.nextLine().trim();
-        if (outputPath.isEmpty()) outputPath = "output.txt";
 
         System.out.print("Optional delimiter (press Enter to skip, default is semicolon): ");
         String delim = scanner.nextLine();
         if (delim == null) delim = ";";
         if (delim.isEmpty()) delim = ";";
 
-        // build proto for output path and delimiter
+        // build proto for output path
         networkapi.grpc.OutputSource protoOutput = OutputSource.newBuilder()
-                .setOutputSource(Any.newBuilder().setValue(ByteString.copyFromUtf8(outputPath)).build())
+                .setFilePath(outputPath)
                 .build();
 
-        // connect to server
+        // connect to gRPC server
         ManagedChannel channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         UserRequestServiceBlockingStub stub = UserRequestServiceGrpc.newBlockingStub(channel);
 
         try {
+        	// send the RPCs in order, printing responses
             System.out.println("Sending input source to server...");
-            // send input
             ProcessResponse resp1 = stub.processInputSource(protoInput);
             System.out.println("processInputSource response: success=" + resp1.getIsSuccess());
 
@@ -118,13 +110,12 @@ public class UserRequestClient {
             ack = stub.requestWriteResults(com.google.protobuf.Empty.getDefaultInstance());
             System.out.println("requestWriteResults ack=" + ack.getOk());
 
-            // For the output file, this client wrote the path into the server's storage; server will write there.
             System.out.println("Task complete. Computation success=" + compResp.getIsSuccess());
 
         } catch (Exception e) {
             System.err.println("Error during RPCs: " + e.getMessage());
             e.printStackTrace();
-        } finally {
+        } finally { // clean up
             channel.shutdownNow();
         }
 
