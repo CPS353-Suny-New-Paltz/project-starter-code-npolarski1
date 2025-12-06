@@ -2,6 +2,7 @@ package processapi;
 
 import project.annotations.ProcessAPI;
 import shared.ComputationResult;
+import shared.Delimiter;
 import shared.InputInts;
 import shared.InputSource;
 import shared.OutputSource;
@@ -17,4 +18,6 @@ public interface DataStorageProcessAPI {
 	public ProcessResponse setOutputSource(OutputSource outputSource);
 
 	ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult);
+
+	void setDelimiter(Delimiter delim);
 }
