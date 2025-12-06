@@ -7,11 +7,13 @@ import shared.InputSource;
 import shared.OutputSource;
 import shared.ProcessResponse;
 
+import processapi.DataStorageProcessAPI;
+
 public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI {
     
     // make the storage and engine per-thread so a single coordinator can be shared by
     // multiple concurrent users
-    private ThreadLocal<DataStorageProcessImpl> storage;
+    private ThreadLocal<DataStorageProcessAPI> storage;
     private ThreadLocal<ComputeComponentImpl> engine;
     
     // per-thread request state
@@ -19,10 +21,11 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
     private ThreadLocal<List<ComputationResult>> results;
     
     public UserRequestNetworkImpl() {
+        // default: use in-process DataStorageProcessImpl so junit tests continue to work in-memory
         this(new DataStorageProcessImpl(), new ComputeComponentImpl());
     }
 
-    public UserRequestNetworkImpl(DataStorageProcessImpl storageInstance, ComputeComponentImpl engineInstance) {
+    public UserRequestNetworkImpl(DataStorageProcessAPI storageInstance, ComputeComponentImpl engineInstance) {
         if (storageInstance == null) {
             System.err.println("Storage instance was null; using default DataStorageProcessImpl");
             storageInstance = new DataStorageProcessImpl();
@@ -32,8 +35,10 @@ public class UserRequestNetworkImpl implements networkapi.UserRequestNetworkAPI 
             engineInstance = new ComputeComponentImpl();
         }
         
-        // create a fresh instance of storage and engine per thread
-        this.storage = ThreadLocal.withInitial(() -> new DataStorageProcessImpl());
+        // create a fresh instance/reference of storage and engine per thread
+        final DataStorageProcessAPI finalStorage = storageInstance;
+        final ComputeComponentImpl finalEngine = engineInstance;
+        this.storage = ThreadLocal.withInitial(() -> finalStorage);
         this.engine = ThreadLocal.withInitial(() -> new ComputeComponentImpl());
         
         // initialize per-thread containers

@@ -1,0 +1,47 @@
+syntax = "proto2";
+
+package datastore;
+
+option java_multiple_files = true;
+option java_package = "datastore.grpc";
+option java_outer_classname = "DataStoreApiProto";
+
+import "google/protobuf/empty.proto";
+
+message InputSource {
+  optional string file_path = 1;
+  repeated int32 manual_ints = 2;
+}
+
+message OutputSource {
+  optional string file_path = 1;
+}
+
+message ProcessResponse {
+  optional bool isSuccess = 1;
+}
+
+message Delimiter {
+  optional string delim = 1;
+}
+
+message InputInts {
+  repeated int32 ints = 1;
+}
+
+message ComputationResult {
+  repeated int32 prime_list = 1;
+}
+
+message WriteRequest {
+  optional ComputationResult result = 1;
+  optional bool last = 2;
+}
+
+service DataStoreService {
+  rpc SetInputSource(InputSource) returns (ProcessResponse);
+  rpc SetOutputSource(OutputSource) returns (ProcessResponse);
+  rpc ReadInput(google.protobuf.Empty) returns (InputInts);
+  rpc WriteOutput(WriteRequest) returns (ProcessResponse);
+  rpc SetDelimiter(Delimiter) returns (ProcessResponse);
+}
