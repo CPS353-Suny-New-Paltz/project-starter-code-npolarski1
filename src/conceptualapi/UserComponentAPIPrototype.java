@@ -10,7 +10,7 @@ public class UserComponentAPIPrototype {
 		ComputeComponentAPI computeApi = null;
 		
 		// process input and output sources
-		conceptualApi.processInputSource(new InputSource(null));
+		conceptualApi.processInputSource(new InputSource());
 		conceptualApi.processOutputSource(new OutputSource());
 
 		// simulate processapi completion: read, pass, compute, and write
@@ -20,5 +20,3 @@ public class UserComponentAPIPrototype {
 		conceptualApi.requestWriteResults();
 	}
 }
-
-

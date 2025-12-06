@@ -9,3 +9,5 @@ build
 bin
 *.class
 *.txt
+manualTestOutput.txt
+manualTestInput.txt
