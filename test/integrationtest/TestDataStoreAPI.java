@@ -5,6 +5,7 @@ import java.util.List;
 
 import processapi.DataStorageProcessAPI;
 import shared.ComputationResult;
+import shared.Delimiter;
 import shared.InputInts;
 import shared.InputSource;
 import shared.OutputSource;
@@ -15,6 +16,12 @@ public class TestDataStoreAPI implements DataStorageProcessAPI {
 	private TestInputSource inputSource;
 
 	private TestOutputSource outputSource;
+
+
+    @Override
+    public void setDelimiter(Delimiter delim) {
+        // no-op for in-memory test double; delimiter handling not needed here
+    }
 
 
 	public InputInts readInput() {
