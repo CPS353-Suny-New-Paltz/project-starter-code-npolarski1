@@ -9,6 +9,8 @@ import shared.OutputSource;
 import shared.ProcessResponse;
 import shared.Delimiter;
 
+import processapi.DataStorageProcessAPI;
+
 /**
  * Helper class containing logic shared between single-threaded and multi-threaded
  * UserRequestNetwork implementations.
@@ -17,7 +19,7 @@ public final class NetworkApiHelper {
 
     private NetworkApiHelper() {}
 
-    public static ProcessResponse processInputSource(DataStorageProcessImpl storage, InputSource inputSource) {
+    public static ProcessResponse processInputSource(DataStorageProcessAPI storage, InputSource inputSource) {
         if (storage == null) {
             System.err.println("processInputSource called with null storage");
             return ProcessResponse.FAIL;
@@ -37,7 +39,7 @@ public final class NetworkApiHelper {
         }
     }
 
-    public static ProcessResponse processOutputSource(DataStorageProcessImpl storage, OutputSource outputSource) {
+    public static ProcessResponse processOutputSource(DataStorageProcessAPI storage, OutputSource outputSource) {
         if (storage == null) {
             System.err.println("processOutputSource called with null storage");
             return ProcessResponse.FAIL;
@@ -57,7 +59,7 @@ public final class NetworkApiHelper {
         }
     }
 
-    public static InputInts readInput(DataStorageProcessImpl storage) {
+    public static InputInts readInput(DataStorageProcessAPI storage) {
         if (storage == null) {
             System.err.println("readInput called with null storage");
             return new InputInts(java.util.Collections.emptyList());
@@ -99,7 +101,7 @@ public final class NetworkApiHelper {
         }
     }
 
-    public static void writeResults(DataStorageProcessImpl storage, List<ComputationResult> res) {
+    public static void writeResults(DataStorageProcessAPI storage, List<ComputationResult> res) {
         if (storage == null) {
             System.err.println("writeResults called with null storage");
             return;
@@ -125,7 +127,7 @@ public final class NetworkApiHelper {
         }
     }
 
-    public static void processDelimiter(DataStorageProcessImpl storage, Delimiter delim) {
+    public static void processDelimiter(DataStorageProcessAPI storage, Delimiter delim) {
         if (storage == null) {
             System.err.println("processDelimiter called with null storage");
             return;
