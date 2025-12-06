@@ -89,7 +89,11 @@ public class UserRequestClient {
         	// send the RPCs in order, printing responses
             System.out.println("Sending input source to server...");
             ProcessResponse resp1 = stub.processInputSource(protoInput);
-            System.out.println("processInputSource response: success=" + resp1.getIsSuccess());
+            if (resp1.getCode() == ProcessResponse.Code.FAIL || !resp1.getIsSuccess()) {
+            	System.out.println("processInputSource FAILED: code=" + resp1.getCode());
+            } else {
+            	System.out.println("processInputSource response: success=" + resp1.getIsSuccess());
+            }
 
             System.out.println("Sending output source to server...");
             ProcessResponse outResp = stub.processOutputSource(protoOutput);
