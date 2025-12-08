@@ -35,9 +35,9 @@ public class FastComputeComponentImpl implements conceptualapi.ComputeComponentA
 		int limit = (int) Math.sqrt(n);
 		int limitIndex = (limit - 1) / 2;
 
-		for (int pIndex = 1; pIndex <= limitIndex; pIndex++) {
-			if (!isComposite.get(pIndex)) {
-				int p = 2 * pIndex + 1;
+		for (int i = 1; i <= limitIndex; i++) {
+			if (!isComposite.get(i)) {
+				int p = 2 * i + 1;
 				long startNum = (long) p * (long) p; // p*p
 				int start = (int) ((startNum - 1L) / 2L);
 				for (int j = start; j <= maxIndex; j += p) {
