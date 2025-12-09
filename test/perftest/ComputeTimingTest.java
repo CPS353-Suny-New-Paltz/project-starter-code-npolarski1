@@ -36,7 +36,7 @@ public class ComputeTimingTest {
     @Test
     public void timingComparisonSimple() throws Exception {
     	// test large input to see significant timing differences
-        List<Integer> input = Arrays.asList(10_000_000);
+        List<Integer> input = Arrays.asList(100_000_000);
         int runs = 5;
 
         List<Long> orig = new ArrayList<>();
