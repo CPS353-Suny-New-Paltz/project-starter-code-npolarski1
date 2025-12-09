@@ -17,3 +17,7 @@ median_fast_ms=36
 speedup=1.69x
 
 This speedup is 69% faster for the fast compute component.
+
+The benchmark test is located at [test/perftest/ComputeTimingTest.java](test/perftest/ComputeTimingTest.java)
+
+The issue was that the algorithm was not optimized enough. To fix this, a data structure that is more memory efficient was used and even numbers are now skipped in the algorithm as they are already known to be not prime.
