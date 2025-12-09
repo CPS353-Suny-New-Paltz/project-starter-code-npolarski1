@@ -64,6 +64,10 @@ public class FastComputeComponentImpl implements conceptualapi.ComputeComponentA
 			List<ComputationResult> outputs = new ArrayList<ComputationResult>();
 
 			for (Integer n : inputs) {
+				if (n == null) {
+					// Skip null inputs
+					continue;
+				}
 				ComputationResult currentOutput = new ComputationResult();
 				currentOutput.setPrimeList(calculatePrimes(n));
 				outputs.add(currentOutput);
@@ -73,7 +77,7 @@ public class FastComputeComponentImpl implements conceptualapi.ComputeComponentA
 		} catch (Exception e) {
 			// Exception handling
 			System.err.println("Error during computation: " + e.getMessage());
-			return Collections.emptyList();
+			throw e;
 		}
 	}
 	

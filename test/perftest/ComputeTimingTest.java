@@ -56,7 +56,10 @@ public class ComputeTimingTest {
         Collections.sort(fast);
         long origMed = orig.get(orig.size() / 2);
         long fastMed = fast.get(fast.size() / 2);
+        float speedUp = (float) origMed / (float) fastMed;
 
-        System.err.println("median_original_ms=" + origMed + " median_fast_ms=" + fastMed + " speedup=" + String.format("%.2fx", (double)origMed / (double)fastMed));
+        System.err.println("median_original_ms=" + origMed + " median_fast_ms=" + fastMed + " speedup=" + String.format("%.2fx", speedUp));
+        
+        assert (speedUp >= 1.1) : "Expected at least 10% speedup, got " + String.format("%.2fx", speedUp);
     }
 }
