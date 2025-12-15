@@ -16,6 +16,8 @@ import shared.OutputSource;
 import shared.ProcessResponse;
 import shared.Delimiter;
 
+import processapi.DataStorageProcessAPI;
+
 /**
  * Multithreaded implementation of the UserRequestNetworkAPI.
  *
@@ -36,6 +38,9 @@ public class MultithreadedUserRequestNetworkImpl implements networkapi.UserReque
     private ThreadLocal<InputInts> input;
     private ThreadLocal<List<ComputationResult>> results;
 
+    // optional externally-provided storage API (kept as reference for thread-local initializers)
+    private final DataStorageProcessAPI externalStorageApi;
+
     /*
      * Creates a MultithreadedUserRequestNetworkImpl with a default maximum number of internal compute threads.
      */
@@ -53,7 +58,67 @@ public class MultithreadedUserRequestNetworkImpl implements networkapi.UserReque
         }
         this.computePool = Executors.newFixedThreadPool(maxThreads);
 
+        this.externalStorageApi = null;
+        // default: use in-process DataStorageProcessImpl for each thread
         this.storage = ThreadLocal.withInitial(() -> new DataStorageProcessImpl());
+        this.input = new ThreadLocal<>();
+        this.results = new ThreadLocal<>();
+    }
+
+    /**
+     * Create a multithreaded network impl that delegates storage operations to an externally
+     * provided DataStorageProcessAPI (for example a gRPC-backed adapter). This allows the
+     * coordinator to use remote storage while still parallelizing compute.
+     */
+    public MultithreadedUserRequestNetworkImpl(DataStorageProcessAPI storageApi) {
+        this(storageApi, DEFAULT_MAX_THREADS);
+    }
+
+    /**
+     * Create a multithreaded network impl with external storage and a specified max thread count.
+     */
+    public MultithreadedUserRequestNetworkImpl(DataStorageProcessAPI storageApi, int maxThreads) {
+        if (maxThreads <= 0) {
+            System.err.println("Invalid maxThreads value: " + maxThreads + "; falling back to DEFAULT_MAX_THREADS=" + DEFAULT_MAX_THREADS);
+            maxThreads = DEFAULT_MAX_THREADS;
+        }
+        this.computePool = Executors.newFixedThreadPool(maxThreads);
+        this.externalStorageApi = storageApi;
+        final DataStorageProcessAPI finalStorage = (storageApi == null) ? null : storageApi;
+        // thread-local storage should return a delegate wrapper that forwards to the provided API
+        if (finalStorage == null) {
+            this.storage = ThreadLocal.withInitial(() -> new DataStorageProcessImpl());
+        } else {
+            // use a small anonymous adapter to satisfy the existing code which expects DataStorageProcessImpl methods.
+            // wrap the provided DataStorageProcessAPI by returning a lightweight shim that delegates calls.
+            this.storage = ThreadLocal.withInitial(() -> new DataStorageProcessImpl() {
+                // override methods to forward to the external API where appropriate
+                @Override
+                public InputInts readInput() {
+                    return finalStorage.readInput();
+                }
+
+                @Override
+                public ProcessResponse setInputSource(InputSource inputSource) {
+                    return finalStorage.setInputSource(inputSource);
+                }
+
+                @Override
+                public ProcessResponse setOutputSource(OutputSource outputSource) {
+                    return finalStorage.setOutputSource(outputSource);
+                }
+
+                @Override
+                public ProcessResponse writeOutput(ComputationResult compResult, boolean lastResult) {
+                    return finalStorage.writeOutput(compResult, lastResult);
+                }
+
+                @Override
+                public void setDelimiter(Delimiter delim) {
+                    finalStorage.setDelimiter(delim);
+                }
+            });
+        }
         this.input = new ThreadLocal<>();
         this.results = new ThreadLocal<>();
     }
