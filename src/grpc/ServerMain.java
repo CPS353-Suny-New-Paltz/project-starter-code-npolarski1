@@ -1,7 +1,6 @@
 package grpc;
 
-import implementapi.UserRequestNetworkImpl;
-import implementapi.ComputeComponentImpl;
+import implementapi.MultithreadedUserRequestNetworkImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import networkapi.UserRequestNetworkAPI;
@@ -18,8 +17,8 @@ public class ServerMain {
         // wrap the client in an adapter that can produce a DataStorageProcessAPI delegate
         DataStoreClientAdapter storageAdapter = new DataStoreClientAdapter(dataStoreClient);
 
-        // pass the gRPC-backed DataStorageProcessAPI (anonymous implementation) into the network implementation
-        UserRequestNetworkAPI impl = new UserRequestNetworkImpl(storageAdapter.toProcessApi(), new ComputeComponentImpl());
+        // pass the gRPC-backed DataStorageProcessAPI (anonymous implementation) into the multithreaded network implementation
+        UserRequestNetworkAPI impl = new MultithreadedUserRequestNetworkImpl(storageAdapter.toProcessApi());
 
         Server server = ServerBuilder
                 .forPort(port)
