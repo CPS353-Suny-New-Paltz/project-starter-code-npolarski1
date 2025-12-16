@@ -63,4 +63,9 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    systemProperty "server.classpath", sourceSets.main.runtimeClasspath.asPath
+}
+
+tasks.named('compileJava') {
+    dependsOn 'generateProto'
 }
