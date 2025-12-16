@@ -21,3 +21,40 @@ This speedup is 69% faster for the fast compute component.
 The benchmark test is located at [test/perftest/ComputeTimingTest.java](test/perftest/ComputeTimingTest.java)
 
 The issue was that the algorithm was not optimized enough. To fix this, a data structure that is more memory efficient was used and even numbers are now skipped in the algorithm as they are already known to be not prime.
+
+
+## Running the gRPC servers (how it works)
+
+This project contains two gRPC mains:
+
+- `grpc.DataStoreServerMain` — a simple gRPC server that provides the data storage process API (list input integers, configure input/output sources, write output). It listens by default on port 50052.
+- `grpc.ServerMain` — the user-request gRPC server that accepts user requests and delegates compute work to a `MultithreadedUserRequestNetworkImpl`. It talks to the DataStore server as a gRPC client and listens by default on port 50051.
+
+High-level flow:
+1. Start the DataStore server (it exposes an API the user-request server will call to read inputs and write outputs).
+2. Start the UserRequest server; it constructs a `DataStoreClient` that connects to the DataStore server and wraps it with `DataStoreClientAdapter` before constructing `MultithreadedUserRequestNetworkImpl`.
+3. The UserRequest server receives requests, reads input from the datastore, parallelizes computation across an internal fixed thread pool, and writes results back to the datastore.
+
+Important build note: the project uses protobufs for the gRPC interfaces. If you run `./gradlew clean build` and the generated proto Java classes are missing, explicitly run the proto generation step first:
+
+    ./gradlew generateProto
+
+After proto generation you can build the project with:
+
+    ./gradlew clean build
+
+Running the servers:
+
+- Run the DataStore server first (default port 50052):
+
+  - From an IDE: run the `grpc.DataStoreServerMain` main class.
+  - From the command line after a successful build you can run the main class with the compiled classes on the classpath. Example (macOS / Linux zsh):
+
+    java -cp build/classes/java/main:build/resources/main grpc.DataStoreServerMain
+
+- Run the UserRequest server (default port 50051):
+
+  - From an IDE: run the `grpc.ServerMain` main class.
+  - From the command line after a successful build:
+
+    java -cp build/classes/java/main:build/resources/main grpc.ServerMain
